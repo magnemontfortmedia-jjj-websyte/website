@@ -647,7 +647,7 @@
     // TODO: Replace with your actual Supabase URL and Anon Key
     const supabaseUrl = 'https://qtnhluqbwfoejukhgkcq.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0bmhsdXFid2ZvZWp1a2hna2NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0MjA1NzEsImV4cCI6MjEwMDk5NjU3MX0.QjprXidz7rXnUfopuV2ujSzOBDQ4ZHj0s8QnJDxlMwE';
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
     document.addEventListener('DOMContentLoaded', () => {
       const gate = document.getElementById('waitlistGate');
@@ -696,7 +696,7 @@
         submitBtn.querySelector('.waitlist-gate__submit-text').textContent = 'Joining...';
 
         // Insert into Supabase
-        supabase.from('waitlist').insert([
+        supabaseClient.from('waitlist').insert([
           { name: name, phone: phone, email: email }
         ]).then(({ error }) => {
           if (error) {
