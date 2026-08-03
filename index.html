@@ -713,6 +713,27 @@
               form.style.display = 'none';
               confirmation.classList.add('waitlist-gate__confirmation--visible');
             }, 500);
+
+            // Send welcome email via Resend (if email was provided)
+            if (email) {
+              fetch(`${supabaseUrl}/functions/v1/send-welcome-email`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${supabaseKey}`,
+                },
+                body: JSON.stringify({ name: name, email: email }),
+              })
+                .then(res => res.json())
+                .then(data => {
+                  if (data.success) {
+                    console.log('Welcome email sent successfully');
+                  } else {
+                    console.warn('Welcome email failed:', data.error);
+                  }
+                })
+                .catch(err => console.warn('Welcome email request failed:', err));
+            }
           }
         });
       });
