@@ -55,64 +55,29 @@ Deno.serve(async (req: Request) => {
 <body style="margin: 0; padding: 0; background-color: #ffffff; font-family: 'Inter', Helvetica, Arial, sans-serif;">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff;">
     <tr>
-      <td align="center" style="padding: 80px 20px;">
+      <td align="center" style="padding: 60px 20px;">
         <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width: 600px; width: 100%; text-align: center;">
           
           <!-- Brand Logo -->
           <tr>
-            <td align="center" style="padding-bottom: 60px;">
-              <img src="https://magnemontfort.com/assets/images/poo.png" alt="Magne Montfort" width="300" style="display: block; border: 0; max-width: 100%; height: auto; margin: 0 auto;">
-            </td>
-          </tr>
-          
-          <!-- Top Divider -->
-          <tr>
             <td align="center" style="padding-bottom: 40px;">
-              <div style="width: 50px; height: 1px; background-color: #c1a87d; margin: 0 auto;"></div>
+              <img src="https://magnemontfort.com/assets/images/poo.png" alt="Magne Montfort" width="200" style="display: block; border: 0; max-width: 100%; height: auto; margin: 0 auto;">
             </td>
           </tr>
           
-          <!-- Checkmark Icon -->
+          <!-- Thank You Note -->
           <tr>
-            <td align="center" style="padding-bottom: 50px;">
-              <div style="width: 64px; height: 64px; border: 1px solid #c1a87d; border-radius: 50%; display: inline-block; text-align: center; line-height: 64px;">
-                <span style="color: #c1a87d; font-size: 32px; font-weight: 300; font-family: sans-serif;">&#10003;</span>
-              </div>
-            </td>
-          </tr>
-          
-          <!-- Title -->
-          <tr>
-            <td align="center" style="padding-bottom: 40px;">
-              <h1 style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 42px; font-weight: 300; color: #222222; letter-spacing: 1.5px;">
-                You're on the List
-              </h1>
-            </td>
-          </tr>
-          
-          <!-- Body Text -->
-          <tr>
-            <td align="center" style="padding-bottom: 60px;">
-              <p style="margin: 0 0 12px 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #666666; font-weight: 300;">
-                Thank you, <span style="color: #c1a87d;">${firstName}</span>.
+            <td align="center" style="padding-bottom: 30px;">
+              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #333333; font-weight: 400; line-height: 1.5;">
+                Thank you for joining the waitlist, ${firstName}.
               </p>
-              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #888888; font-weight: 300;">
-                You'll receive early access one hour before launch.
-              </p>
-            </td>
-          </tr>
-          
-          <!-- Bottom Divider -->
-          <tr>
-            <td align="center" style="padding-bottom: 40px;">
-              <div style="width: 50px; height: 1px; background-color: #c1a87d; margin: 0 auto;"></div>
             </td>
           </tr>
           
           <!-- Footer -->
           <tr>
             <td align="center">
-              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; color: #999999;">
+              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 14px; color: #666666; font-weight: 400;">
                 Keep an eye on your inbox.
               </p>
             </td>
