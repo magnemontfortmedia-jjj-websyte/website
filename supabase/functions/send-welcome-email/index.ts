@@ -50,114 +50,70 @@ Deno.serve(async (req: Request) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to Magne Montfort</title>
+  <title>You're on the List - Magne Montfort</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: Georgia, 'Times New Roman', serif;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #0a0a0a;">
+<body style="margin: 0; padding: 0; background-color: #ffffff; font-family: 'Inter', Helvetica, Arial, sans-serif;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff;">
     <tr>
-      <td align="center" style="padding: 40px 20px;">
-        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width: 600px; width: 100%;">
+      <td align="center" style="padding: 80px 20px;">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width: 600px; width: 100%; text-align: center;">
           
-          <!-- Top Border Accent -->
+          <!-- Brand Logo -->
           <tr>
-            <td style="height: 1px; background: linear-gradient(90deg, transparent, #c9a96e, transparent);"></td>
+            <td align="center" style="padding-bottom: 60px;">
+              <img src="https://magnemontfort.com/assets/images/poo.png" alt="Magne Montfort" width="300" style="display: block; border: 0; max-width: 100%; height: auto; margin: 0 auto;">
+            </td>
           </tr>
           
-          <!-- Spacer -->
-          <tr><td style="height: 48px;"></td></tr>
-          
-          <!-- Brand Name -->
+          <!-- Top Divider -->
           <tr>
-            <td align="center" style="padding: 0 40px;">
-              <h1 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 28px; font-weight: 300; letter-spacing: 6px; text-transform: uppercase; color: #c9a96e;">
-                Magne Montfort
+            <td align="center" style="padding-bottom: 40px;">
+              <div style="width: 50px; height: 1px; background-color: #c1a87d; margin: 0 auto;"></div>
+            </td>
+          </tr>
+          
+          <!-- Checkmark Icon -->
+          <tr>
+            <td align="center" style="padding-bottom: 50px;">
+              <div style="width: 64px; height: 64px; border: 1px solid #c1a87d; border-radius: 50%; display: inline-block; text-align: center; line-height: 64px;">
+                <span style="color: #c1a87d; font-size: 32px; font-weight: 300; font-family: sans-serif;">&#10003;</span>
+              </div>
+            </td>
+          </tr>
+          
+          <!-- Title -->
+          <tr>
+            <td align="center" style="padding-bottom: 40px;">
+              <h1 style="margin: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 42px; font-weight: 300; color: #222222; letter-spacing: 1.5px;">
+                You're on the List
               </h1>
             </td>
           </tr>
           
-          <!-- Divider -->
-          <tr>
-            <td align="center" style="padding: 24px 0;">
-              <div style="width: 40px; height: 1px; background-color: #c9a96e; opacity: 0.5;"></div>
-            </td>
-          </tr>
-          
-          <!-- Greeting -->
-          <tr>
-            <td align="center" style="padding: 0 40px;">
-              <p style="margin: 0 0 8px 0; font-family: Georgia, 'Times New Roman', serif; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: #8a8a8a;">
-                Welcome
-              </p>
-              <h2 style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 32px; font-weight: 300; font-style: italic; color: #f0ece4; line-height: 1.3;">
-                Dear ${firstName},
-              </h2>
-            </td>
-          </tr>
-          
-          <!-- Spacer -->
-          <tr><td style="height: 32px;"></td></tr>
-          
           <!-- Body Text -->
           <tr>
-            <td align="center" style="padding: 0 50px;">
-              <p style="margin: 0 0 20px 0; font-family: Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.8; color: #b0a99a;">
-                Thank you for joining the Magne Montfort waitlist. You are now among a select group who will receive early access to our collections — one hour before they are revealed to the world.
+            <td align="center" style="padding-bottom: 60px;">
+              <p style="margin: 0 0 12px 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #666666; font-weight: 300;">
+                Thank you, <span style="color: #c1a87d;">${firstName}</span>.
               </p>
-              <p style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 16px; line-height: 1.8; color: #b0a99a;">
-                Every piece in our atelier is handcrafted with over 40 hours of devoted artisanship, using the world's finest natural fibres. We look forward to sharing this with you.
-              </p>
-            </td>
-          </tr>
-          
-          <!-- Spacer -->
-          <tr><td style="height: 36px;"></td></tr>
-          
-          <!-- Highlight Box -->
-          <tr>
-            <td align="center" style="padding: 0 40px;">
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
-                <tr>
-                  <td style="border: 1px solid rgba(201, 169, 110, 0.2); padding: 28px 32px; text-align: center;">
-                    <p style="margin: 0 0 4px 0; font-family: Arial, Helvetica, sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: #c9a96e;">
-                      Your Status
-                    </p>
-                    <p style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 20px; font-weight: 300; color: #f0ece4; letter-spacing: 1px;">
-                      Waitlist Confirmed
-                    </p>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-          
-          <!-- Spacer -->
-          <tr><td style="height: 36px;"></td></tr>
-          
-          <!-- Closing -->
-          <tr>
-            <td align="center" style="padding: 0 50px;">
-              <p style="margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: 15px; font-style: italic; line-height: 1.7; color: #8a8a8a;">
-                "Where heritage meets the art of modern elegance."
+              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #888888; font-weight: 300;">
+                You'll receive early access one hour before launch.
               </p>
             </td>
           </tr>
-          
-          <!-- Spacer -->
-          <tr><td style="height: 40px;"></td></tr>
           
           <!-- Bottom Divider -->
           <tr>
-            <td style="height: 1px; background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.3), transparent);"></td>
+            <td align="center" style="padding-bottom: 40px;">
+              <div style="width: 50px; height: 1px; background-color: #c1a87d; margin: 0 auto;"></div>
+            </td>
           </tr>
           
           <!-- Footer -->
           <tr>
-            <td align="center" style="padding: 28px 40px;">
-              <p style="margin: 0; font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #555; letter-spacing: 1px;">
-                &copy; 2026 Magne Montfort. All rights reserved.
-              </p>
-              <p style="margin: 8px 0 0 0; font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #444;">
-                This email was sent because you joined our waitlist.
+            <td align="center">
+              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 12px; letter-spacing: 2.5px; text-transform: uppercase; color: #999999;">
+                Keep an eye on your inbox.
               </p>
             </td>
           </tr>
