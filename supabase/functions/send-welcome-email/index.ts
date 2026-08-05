@@ -53,11 +53,11 @@ Deno.serve(async (req: Request) => {
   <meta name="color-scheme" content="light">
   <title>You're on the List - Magne Montfort</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #ffffff; color: #111111; font-family: 'Inter', Helvetica, Arial, sans-serif;" bgcolor="#ffffff">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" style="background-color: #ffffff; width: 100%;">
+<body style="margin: 0; padding: 0; background-color: #ffffff; background-image: url('https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png'); color: #111111; font-family: 'Inter', Helvetica, Arial, sans-serif;" bgcolor="#ffffff" background="https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" background="https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png" style="background-color: #ffffff; background-image: url('https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png'); width: 100%;">
     <tr>
-      <td align="center" style="padding: 60px 20px; background-color: #ffffff;" bgcolor="#ffffff">
-        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" style="max-width: 600px; width: 100%; text-align: center; background-color: #ffffff; margin: 0 auto;">
+      <td align="center" style="padding: 60px 20px; background-color: #ffffff; background-image: url('https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png');" bgcolor="#ffffff" background="https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" background="https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png" style="max-width: 600px; width: 100%; text-align: center; background-color: #ffffff; background-image: url('https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png'); margin: 0 auto;">
           
           <!-- Brand Logo -->
           <tr>
