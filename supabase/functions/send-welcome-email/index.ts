@@ -53,40 +53,16 @@ Deno.serve(async (req: Request) => {
   <meta name="color-scheme" content="light">
   <title>You're on the List - Magne Montfort</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #ffffff; background-image: url('https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png'); color: #111111; font-family: 'Inter', Helvetica, Arial, sans-serif;" bgcolor="#ffffff" background="https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png">
+<body style="margin: 0; padding: 0; background-color: #ffffff; background-image: url('https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png');" bgcolor="#ffffff" background="https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png">
   <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" background="https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png" style="background-color: #ffffff; background-image: url('https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png'); width: 100%;">
     <tr>
-      <td align="center" style="padding: 60px 20px; background-color: #ffffff; background-image: url('https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png');" bgcolor="#ffffff" background="https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png">
+      <td align="center" style="padding: 40px 20px; background-color: #ffffff; background-image: url('https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png');" bgcolor="#ffffff" background="https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png">
         <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" background="https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png" style="max-width: 600px; width: 100%; text-align: center; background-color: #ffffff; background-image: url('https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/white-bg.png'); margin: 0 auto;">
-          
-          <!-- Brand Logo -->
-          <tr>
-            <td align="center" style="padding-bottom: 40px; background-color: #ffffff;" bgcolor="#ffffff">
-              <img src="https://magnemontfort.com/assets/images/poo.png" alt="Magne Montfort" width="220" style="display: block; border: 0; max-width: 100%; height: auto; margin: 0 auto; background-color: #ffffff;">
-            </td>
-          </tr>
-          
-          <!-- Thank You Note -->
-          <tr>
-            <td align="center" style="padding-bottom: 24px; background-color: #ffffff;" bgcolor="#ffffff">
-              <p style="margin: 0 0 12px 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #111111; font-weight: 400; line-height: 1.5;">
-                Thank you for joining the waitlist, ${firstName}.
-              </p>
-              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 15px; color: #444444; font-weight: 400; line-height: 1.5;">
-                Since you signed up early, you will get early access 1 hour before the world does.
-              </p>
-            </td>
-          </tr>
-          
-          <!-- Footer -->
           <tr>
             <td align="center" style="background-color: #ffffff;" bgcolor="#ffffff">
-              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 14px; color: #555555; font-weight: 400;">
-                Keep an eye on your inbox.
-              </p>
+              <img src="https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/email.png" alt="Magne Montfort - You're on the list" width="600" style="display: block; border: 0; max-width: 100%; height: auto; margin: 0 auto; background-color: #ffffff;">
             </td>
           </tr>
-          
         </table>
       </td>
     </tr>
