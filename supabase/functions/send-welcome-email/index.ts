@@ -65,68 +65,47 @@ Deno.serve(async (req: Request) => {
       color-scheme: light;
       supported-color-schemes: light;
     }
-    body {
-      margin: 0;
-      padding: 0;
+    body, table, td, div {
       background-color: #ffffff !important;
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==') !important;
     }
-    table, td, div {
-      background-color: #ffffff !important;
-    }
-    /* Force Light Mode in Apple/iOS/Webmail Dark Mode */
-    @media (prefers-color-scheme: dark) {
-      body, table, td, div {
-        background-color: #ffffff !important;
-        background-image: linear-gradient(#ffffff, #ffffff) !important;
-      }
-      p, span {
-        color: #333333 !important;
-        -webkit-text-fill-color: #333333 !important;
-      }
-    }
-    /* Force Light Mode in Outlook.com Dark Mode */
-    [data-ogsc] body, [data-ogsc] table, [data-ogsc] td {
-      background-color: #ffffff !important;
+    p, span, h1 {
+      color: #000001 !important;
+      -webkit-text-fill-color: #000001 !important;
     }
   </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #ffffff; -webkit-font-smoothing: antialiased;" bgcolor="#ffffff">
+<body style="margin: 0; padding: 0; background-color: #ffffff; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='); -webkit-font-smoothing: antialiased;" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
   
   <!--[if mso]>
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
     <tr>
-      <td align="center" bgcolor="#ffffff">
+      <td align="center" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
   <![endif]-->
   
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" style="background-color: #ffffff; width: 100%;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==" style="background-color: #ffffff; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='); width: 100%;">
     <tr>
-      <td align="center" style="padding: 60px 20px; background-color: #ffffff;" bgcolor="#ffffff">
+      <td align="center" style="padding: 60px 20px; background-color: #ffffff; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==');" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
         
         <!--[if mso]>
-        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
           <tr>
-            <td align="center" bgcolor="#ffffff">
+            <td align="center" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
         <![endif]-->
         
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" style="max-width: 600px; width: 100%; text-align: center; background-color: #ffffff; margin: 0 auto;">
+        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==" style="max-width: 600px; width: 100%; text-align: center; background-color: #ffffff; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='); margin: 0 auto;">
           
           <!-- Brand Logo -->
           <tr>
-            <td align="center" style="padding-bottom: 40px; background-color: #ffffff;" bgcolor="#ffffff">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" style="background-color: #ffffff; border-radius: 4px;">
-                <tr>
-                  <td align="center" style="background-color: #ffffff; padding: 10px;" bgcolor="#ffffff">
-                    <img src="https://magnemontfort.com/assets/images/poo.png" alt="Magne Montfort" width="200" style="display: block; border: 0; max-width: 100%; height: auto; margin: 0 auto;">
-                  </td>
-                </tr>
-              </table>
+            <td align="center" style="padding-bottom: 40px; background-color: #ffffff; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==');" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
+              <img src="https://magnemontfort.com/assets/images/poo.png" alt="Magne Montfort" width="200" style="display: block; border: 0; max-width: 100%; height: auto; margin: 0 auto; background-color: #ffffff;">
             </td>
           </tr>
           
           <!-- Thank You Note -->
           <tr>
-            <td align="center" style="padding-bottom: 30px; background-color: #ffffff;" bgcolor="#ffffff">
-              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #333333; font-weight: 400; line-height: 1.5; mso-line-height-rule: exactly;">
+            <td align="center" style="padding-bottom: 30px; background-color: #ffffff; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==');" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
+              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #000001 !important; font-weight: 400; line-height: 1.5; mso-line-height-rule: exactly;">
                 Thank you for joining the waitlist, ${firstName}.
               </p>
             </td>
@@ -134,8 +113,8 @@ Deno.serve(async (req: Request) => {
           
           <!-- Footer -->
           <tr>
-            <td align="center" style="background-color: #ffffff;" bgcolor="#ffffff">
-              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 14px; color: #666666; font-weight: 400; mso-line-height-rule: exactly;">
+            <td align="center" style="background-color: #ffffff; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==');" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
+              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 14px; color: #444445 !important; font-weight: 400; mso-line-height-rule: exactly;">
                 Keep an eye on your inbox.
               </p>
             </td>
