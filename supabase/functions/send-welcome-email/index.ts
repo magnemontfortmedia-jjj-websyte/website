@@ -46,66 +46,30 @@ Deno.serve(async (req: Request) => {
     // Branded HTML email matching Magne Montfort's luxury aesthetic
     const htmlEmail = `
 <!DOCTYPE html>
-<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="color-scheme" content="light">
-  <meta name="supported-color-schemes" content="light">
   <title>You're on the List - Magne Montfort</title>
-  <!--[if mso]>
-  <xml>
-    <o:OfficeDocumentSettings>
-      <o:PixelsPerInch>96</o:PixelsPerInch>
-    </o:OfficeDocumentSettings>
-  </xml>
-  <![endif]-->
-  <style>
-    :root {
-      color-scheme: light;
-      supported-color-schemes: light;
-    }
-    body, table, td, div {
-      background-color: #ffffff !important;
-      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==') !important;
-    }
-    p, span, h1 {
-      color: #000001 !important;
-      -webkit-text-fill-color: #000001 !important;
-    }
-  </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #ffffff; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='); -webkit-font-smoothing: antialiased;" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
-  
-  <!--[if mso]>
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
+<body style="margin: 0; padding: 0; background-color: #ffffff; color: #111111; font-family: 'Inter', Helvetica, Arial, sans-serif;" bgcolor="#ffffff">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" style="background-color: #ffffff; width: 100%;">
     <tr>
-      <td align="center" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
-  <![endif]-->
-  
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==" style="background-color: #ffffff; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='); width: 100%;">
-    <tr>
-      <td align="center" style="padding: 60px 20px; background-color: #ffffff; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==');" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
-        
-        <!--[if mso]>
-        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
-          <tr>
-            <td align="center" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
-        <![endif]-->
-        
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==" style="max-width: 600px; width: 100%; text-align: center; background-color: #ffffff; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=='); margin: 0 auto;">
+      <td align="center" style="padding: 60px 20px; background-color: #ffffff;" bgcolor="#ffffff">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" style="max-width: 600px; width: 100%; text-align: center; background-color: #ffffff; margin: 0 auto;">
           
           <!-- Brand Logo -->
           <tr>
-            <td align="center" style="padding-bottom: 40px; background-color: #ffffff; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==');" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
-              <img src="https://magnemontfort.com/assets/images/poo.png" alt="Magne Montfort" width="200" style="display: block; border: 0; max-width: 100%; height: auto; margin: 0 auto; background-color: #ffffff;">
+            <td align="center" style="padding-bottom: 40px; background-color: #ffffff;" bgcolor="#ffffff">
+              <img src="https://magnemontfort.com/assets/images/poo.png" alt="Magne Montfort" width="220" style="display: block; border: 0; max-width: 100%; height: auto; margin: 0 auto; background-color: #ffffff;">
             </td>
           </tr>
           
           <!-- Thank You Note -->
           <tr>
-            <td align="center" style="padding-bottom: 30px; background-color: #ffffff; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==');" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
-              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #000001 !important; font-weight: 400; line-height: 1.5; mso-line-height-rule: exactly;">
+            <td align="center" style="padding-bottom: 24px; background-color: #ffffff;" bgcolor="#ffffff">
+              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #111111; font-weight: 400; line-height: 1.5;">
                 Thank you for joining the waitlist, ${firstName}.
               </p>
             </td>
@@ -113,31 +77,17 @@ Deno.serve(async (req: Request) => {
           
           <!-- Footer -->
           <tr>
-            <td align="center" style="background-color: #ffffff; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==');" bgcolor="#ffffff" background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==">
-              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 14px; color: #444445 !important; font-weight: 400; mso-line-height-rule: exactly;">
+            <td align="center" style="background-color: #ffffff;" bgcolor="#ffffff">
+              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 14px; color: #555555; font-weight: 400;">
                 Keep an eye on your inbox.
               </p>
             </td>
           </tr>
           
         </table>
-        
-        <!--[if mso]>
-            </td>
-          </tr>
-        </table>
-        <![endif]-->
-        
       </td>
     </tr>
   </table>
-  
-  <!--[if mso]>
-      </td>
-    </tr>
-  </table>
-  <![endif]-->
-  
 </body>
 </html>`;
 
