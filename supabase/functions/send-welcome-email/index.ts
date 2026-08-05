@@ -50,24 +50,35 @@ Deno.serve(async (req: Request) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
   <title>You're on the List - Magne Montfort</title>
+  <style>
+    :root {
+      color-scheme: light;
+      supported-color-schemes: light;
+    }
+    body, table, td {
+      background-color: #ffffff !important;
+    }
+  </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #ffffff; font-family: 'Inter', Helvetica, Arial, sans-serif;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff;">
+<body style="margin: 0; padding: 0; background-color: #ffffff;" bgcolor="#ffffff">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" style="background-color: #ffffff; width: 100%;">
     <tr>
-      <td align="center" style="padding: 60px 20px;">
-        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width: 600px; width: 100%; text-align: center;">
+      <td align="center" style="padding: 60px 20px; background-color: #ffffff;" bgcolor="#ffffff">
+        <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" bgcolor="#ffffff" style="max-width: 600px; width: 100%; text-align: center; background-color: #ffffff;">
           
           <!-- Brand Logo -->
           <tr>
-            <td align="center" style="padding-bottom: 40px;">
-              <img src="https://magnemontfort.com/assets/images/poo.png" alt="Magne Montfort" width="200" style="display: block; border: 0; max-width: 100%; height: auto; margin: 0 auto;">
+            <td align="center" style="padding-bottom: 40px; background-color: #ffffff;" bgcolor="#ffffff">
+              <img src="https://magnemontfort.com/assets/images/poo.png" alt="Magne Montfort" width="200" style="display: block; border: 0; max-width: 100%; height: auto; margin: 0 auto; background-color: #ffffff;">
             </td>
           </tr>
           
           <!-- Thank You Note -->
           <tr>
-            <td align="center" style="padding-bottom: 30px;">
+            <td align="center" style="padding-bottom: 30px; background-color: #ffffff;" bgcolor="#ffffff">
               <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #333333; font-weight: 400; line-height: 1.5;">
                 Thank you for joining the waitlist, ${firstName}.
               </p>
@@ -76,7 +87,7 @@ Deno.serve(async (req: Request) => {
           
           <!-- Footer -->
           <tr>
-            <td align="center">
+            <td align="center" style="background-color: #ffffff;" bgcolor="#ffffff">
               <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 14px; color: #666666; font-weight: 400;">
                 Keep an eye on your inbox.
               </p>
