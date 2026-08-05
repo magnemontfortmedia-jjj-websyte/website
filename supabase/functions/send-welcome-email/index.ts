@@ -62,7 +62,7 @@ Deno.serve(async (req: Request) => {
           <!-- Brand Logo -->
           <tr>
             <td align="center" style="padding-bottom: 40px; background-color: #ffffff;" bgcolor="#ffffff">
-              <img src="https://magnemontfort.com/assets/images/poo.png" alt="Magne Montfort" width="240" style="display: block; border: 0; max-width: 100%; height: auto; margin: 0 auto; background-color: #ffffff;">
+              <img src="https://raw.githubusercontent.com/magnemontfortmedia-jjj-websyte/website/main/assets/images/putinemail.png" alt="Magne Montfort" width="240" style="display: block; border: 0; max-width: 100%; height: auto; margin: 0 auto; background-color: #ffffff;">
             </td>
           </tr>
           
