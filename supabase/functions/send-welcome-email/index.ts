@@ -69,8 +69,11 @@ Deno.serve(async (req: Request) => {
           <!-- Thank You Note -->
           <tr>
             <td align="center" style="padding-bottom: 24px; background-color: #ffffff;" bgcolor="#ffffff">
-              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #111111; font-weight: 400; line-height: 1.5;">
+              <p style="margin: 0 0 12px 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 16px; color: #111111; font-weight: 400; line-height: 1.5;">
                 Thank you for joining the waitlist, ${firstName}.
+              </p>
+              <p style="margin: 0; font-family: 'Inter', Helvetica, Arial, sans-serif; font-size: 15px; color: #444444; font-weight: 400; line-height: 1.5;">
+                Since you signed up early, you will get early access 1 hour before the world does.
               </p>
             </td>
           </tr>
