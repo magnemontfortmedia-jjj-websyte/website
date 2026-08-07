@@ -136,11 +136,12 @@
             </svg>
           </a>
           <!-- Bag -->
-          <a href="#" class="nav__icon" id="nav-bag" aria-label="Shopping bag">
+          <a href="#" class="nav__icon nav__icon--bag" id="nav-bag" aria-label="Shopping bag">
             <svg viewBox="0 0 24 24">
               <path d="M6 6h12l1 14H5L6 6z" />
               <path d="M9 6V4a3 3 0 0 1 6 0v2" />
             </svg>
+            <span class="cart-badge" id="cartBadge"></span>
           </a>
 
           <!-- Mobile Menu Toggle -->
@@ -239,50 +240,53 @@
         </div>
 
         <div class="collections__grid">
-          <!-- Card 1 -->
-          <div class="collection-card reveal" id="collection-noir">
-            <img src="assets/images/editorial_dark.png" alt="Noir Collection — Black cable-knit sweater"
+          <!-- Card 1: Bomber Jacket -->
+          <a href="product.html?id=bomber" class="collection-card reveal" id="collection-bomber">
+            <img src="assets/images/bomber.png" alt="Shearling Bomber Jacket"
               class="collection-card__image">
             <div class="collection-card__overlay"></div>
             <div class="collection-card__content">
-              <p class="collection-card__label">AW26</p>
-              <h3 class="collection-card__title">The Noir<br>Collection</h3>
+              <p class="collection-card__label">Outerwear</p>
+              <h3 class="collection-card__title">Shearling<br>Bomber</h3>
+              <p class="collection-card__price">$500</p>
               <span class="collection-card__cta">
-                Explore
+                Shop Now
                 <span class="collection-card__cta-line"></span>
               </span>
             </div>
-          </div>
+          </a>
 
-          <!-- Card 2 -->
-          <div class="collection-card reveal reveal--delay-1" id="collection-ivory">
-            <img src="assets/images/collection_white.png" alt="Ivory Collection — White cable-knit sweater"
+          <!-- Card 2: Cable Knit -->
+          <a href="product.html?id=cable_knit" class="collection-card reveal reveal--delay-1" id="collection-cable-knit">
+            <img src="assets/images/cable_knit.png" alt="Cable Knit Sweater"
               class="collection-card__image">
             <div class="collection-card__overlay"></div>
             <div class="collection-card__content">
-              <p class="collection-card__label">AW26</p>
-              <h3 class="collection-card__title">The Ivory<br>Collection</h3>
+              <p class="collection-card__label">Knitwear</p>
+              <h3 class="collection-card__title">Cable Knit<br>Sweater</h3>
+              <p class="collection-card__price">$300</p>
               <span class="collection-card__cta">
-                Explore
+                Shop Now
                 <span class="collection-card__cta-line"></span>
               </span>
             </div>
-          </div>
+          </a>
 
-          <!-- Card 3 -->
-          <div class="collection-card reveal reveal--delay-2" id="collection-essential">
-            <img src="assets/images/collection_knitwear.png" alt="Essentials — Premium knitwear flatlay"
+          <!-- Card 3: Tailored Trousers -->
+          <a href="product.html?id=trousers" class="collection-card reveal reveal--delay-2" id="collection-trousers">
+            <img src="assets/images/trousers_navy.png" alt="Tailored Trousers"
               class="collection-card__image">
             <div class="collection-card__overlay"></div>
             <div class="collection-card__content">
-              <p class="collection-card__label">Signature</p>
-              <h3 class="collection-card__title">The<br>Essentials</h3>
+              <p class="collection-card__label">Trousers</p>
+              <h3 class="collection-card__title">Tailored<br>Trousers</h3>
+              <p class="collection-card__price">$200</p>
               <span class="collection-card__cta">
-                Explore
+                Shop Now
                 <span class="collection-card__cta-line"></span>
               </span>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </section>
@@ -634,6 +638,49 @@
     </script>
 
   </div><!-- /.site-content -->
+
+  <!-- Cart Overlay -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer__header">
+      <h3 class="cart-drawer__title">Your Bag</h3>
+      <button class="cart-drawer__close" id="cartClose" aria-label="Close cart">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cart-drawer__body">
+      <!-- Empty State -->
+      <div class="cart-empty" id="cartEmpty">
+        <svg viewBox="0 0 24 24" width="48" height="48" style="stroke: var(--color-pearl); fill: none; stroke-width: 1;">
+          <path d="M6 6h12l1 14H5L6 6z" />
+          <path d="M9 6V4a3 3 0 0 1 6 0v2" />
+        </svg>
+        <p class="cart-empty__text">Your bag is empty</p>
+        <button class="cart-empty__cta" onclick="MagneCart.closeDrawer()">Continue Shopping</button>
+      </div>
+
+      <!-- Cart Items -->
+      <div id="cartItems"></div>
+    </div>
+
+    <div class="cart-drawer__footer" id="cartFooter" style="display:none;">
+      <div class="cart-drawer__subtotal">
+        <span>Subtotal</span>
+        <span id="cartSubtotal">$0</span>
+      </div>
+      <p class="cart-drawer__shipping">Shipping calculated at checkout</p>
+      <button class="cart-drawer__checkout" id="checkoutBtn">Checkout</button>
+    </div>
+  </div>
+
+  <!-- Cart System -->
+  <script src="cart.js"></script>
 
   <!-- Supabase SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product — Magne Montfort</title>
+  <meta name="description" content="Discover luxury craftsmanship from Magne Montfort. Explore our premium collection of handcrafted garments.">
+  <meta name="theme-color" content="#0a0a0a">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Navigation — Same as index.html -->
+  <nav class="nav nav--scrolled" id="mainNav">
+    <div class="nav__top-row">
+      <ul class="nav__utility-links">
+        <li><a href="index.html#newsletter" class="nav__utility-link" id="nav-contact">Contact Us</a></li>
+      </ul>
+
+      <a href="index.html" class="nav__brand" id="nav-brand">
+        <img src="assets/images/poo.png" alt="Magne Montfort fleur-de-lis emblem" class="nav__brand-emblem">
+      </a>
+
+      <div class="nav__icons">
+        <!-- Account -->
+        <a href="#" class="nav__icon" id="nav-account" aria-label="Account">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="8" r="4" />
+            <path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1" />
+          </svg>
+        </a>
+        <!-- Bag -->
+        <a href="#" class="nav__icon nav__icon--bag" id="nav-bag" aria-label="Shopping bag">
+          <svg viewBox="0 0 24 24">
+            <path d="M6 6h12l1 14H5L6 6z" />
+            <path d="M9 6V4a3 3 0 0 1 6 0v2" />
+          </svg>
+          <span class="cart-badge" id="cartBadge"></span>
+        </a>
+      </div>
+    </div>
+
+    <ul class="nav__bottom-row">
+      <li><a href="index.html#collections" class="nav__link" id="nav-collections">Collections</a></li>
+      <li><a href="index.html#heritage" class="nav__link" id="nav-heritage">Heritage</a></li>
+      <li><a href="index.html#craftsmanship" class="nav__link" id="nav-craftsmanship">Atelier</a></li>
+      <li><a href="index.html#editorial" class="nav__link" id="nav-editorial">Journal</a></li>
+    </ul>
+  </nav>
+
+  <!-- Product Page Content -->
+  <main class="product-page" id="productPage">
+
+    <!-- Breadcrumb -->
+    <div class="product-breadcrumb">
+      <a href="index.html">Home</a>
+      <span class="product-breadcrumb__sep">/</span>
+      <a href="index.html#collections">Collections</a>
+      <span class="product-breadcrumb__sep">/</span>
+      <span id="breadcrumbProduct">Product</span>
+    </div>
+
+    <div class="product-layout">
+
+      <!-- Left: Image Gallery -->
+      <div class="product-gallery" id="productGallery">
+        <div class="product-gallery__main">
+          <img src="" alt="" id="productMainImage" class="product-gallery__image">
+        </div>
+      </div>
+
+      <!-- Right: Product Info -->
+      <div class="product-info">
+        <p class="product-info__category" id="productCategory"></p>
+        <h1 class="product-info__name" id="productName"></h1>
+        <p class="product-info__price" id="productPrice"></p>
+
+        <div class="product-info__divider"></div>
+
+        <p class="product-info__description" id="productDescription"></p>
+
+        <!-- Color Selector (for trousers) -->
+        <div class="product-colors" id="productColors" style="display:none;">
+          <p class="product-colors__label">Colour: <span id="colorName"></span></p>
+          <div class="product-colors__swatches" id="colorSwatches"></div>
+        </div>
+
+        <!-- Size Selector -->
+        <div class="product-sizes">
+          <p class="product-sizes__label">Size</p>
+          <div class="product-sizes__grid" id="sizeGrid"></div>
+        </div>
+
+        <!-- Add to Cart -->
+        <div class="product-actions">
+          <button class="product-actions__add" id="addToCartBtn">
+            <span>Add to Bag</span>
+          </button>
+          <button class="product-actions__wishlist" id="wishlistBtn" aria-label="Add to wishlist">
+            <svg viewBox="0 0 24 24" width="22" height="22">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" 
+                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Expandable Accordions -->
+        <div class="product-accordions">
+          <div class="product-accordion" id="accordionDetails">
+            <button class="product-accordion__trigger" data-accordion="details">
+              <span>Details</span>
+              <span class="product-accordion__icon">+</span>
+            </button>
+            <div class="product-accordion__content" id="detailsContent">
+              <ul class="product-accordion__list" id="detailsList"></ul>
+            </div>
+          </div>
+
+          <div class="product-accordion" id="accordionSizeGuide">
+            <button class="product-accordion__trigger" data-accordion="sizeGuide">
+              <span>Size Guide</span>
+              <span class="product-accordion__icon">+</span>
+            </button>
+            <div class="product-accordion__content">
+              <p>For the perfect fit, we recommend ordering your usual size. Our garments are designed with a regular fit. If you prefer a more relaxed silhouette, consider sizing up.</p>
+              <br>
+              <p><strong>XS:</strong> Chest 86–91cm &nbsp; <strong>S:</strong> Chest 91–96cm &nbsp; <strong>M:</strong> Chest 96–101cm</p>
+              <p><strong>L:</strong> Chest 101–106cm &nbsp; <strong>XL:</strong> Chest 106–111cm &nbsp; <strong>XXL:</strong> Chest 111–116cm</p>
+            </div>
+          </div>
+
+          <div class="product-accordion" id="accordionShipping">
+            <button class="product-accordion__trigger" data-accordion="shipping">
+              <span>Shipping, Exchanges & Returns</span>
+              <span class="product-accordion__icon">+</span>
+            </button>
+            <div class="product-accordion__content">
+              <p><strong>Complimentary Shipping</strong> on all orders over $300.</p>
+              <br>
+              <p>Standard delivery: 5–7 business days. Express delivery: 2–3 business days.</p>
+              <br>
+              <p>We accept returns within 14 days of delivery. Items must be unworn, with all tags attached, in their original packaging.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <h3 class="footer__brand-name">Magne Montfort</h3>
+          <p class="footer__brand-desc">
+            A luxury clothing house rooted in European heritage, crafting timeless garments for the modern
+            connoisseur.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer__heading">Collections</h4>
+          <ul class="footer__links">
+            <li><a href="product.html?id=bomber" class="footer__link">Shearling Bomber</a></li>
+            <li><a href="product.html?id=cable_knit" class="footer__link">Cable Knit Sweater</a></li>
+            <li><a href="product.html?id=trousers" class="footer__link">Tailored Trousers</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer__heading">The House</h4>
+          <ul class="footer__links">
+            <li><a href="index.html#heritage" class="footer__link">Our Story</a></li>
+            <li><a href="index.html#craftsmanship" class="footer__link">The Atelier</a></li>
+            <li><a href="index.html#editorial" class="footer__link">Journal</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer__heading">Client Services</h4>
+          <ul class="footer__links">
+            <li><a href="#" class="footer__link">Contact Us</a></li>
+            <li><a href="#" class="footer__link">Shipping & Returns</a></li>
+            <li><a href="#" class="footer__link">Care Guide</a></li>
+            <li><a href="#" class="footer__link">Size Guide</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p class="footer__copyright">&copy; 2026 Magne Montfort. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Overlay -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+
+  <!-- Cart Drawer -->
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-drawer__header">
+      <h3 class="cart-drawer__title">Your Bag</h3>
+      <button class="cart-drawer__close" id="cartClose" aria-label="Close cart">
+        <svg viewBox="0 0 24 24" width="20" height="20">
+          <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="cart-drawer__body">
+      <div class="cart-empty" id="cartEmpty">
+        <svg viewBox="0 0 24 24" width="48" height="48" style="stroke: var(--color-pearl); fill: none; stroke-width: 1;">
+          <path d="M6 6h12l1 14H5L6 6z" />
+          <path d="M9 6V4a3 3 0 0 1 6 0v2" />
+        </svg>
+        <p class="cart-empty__text">Your bag is empty</p>
+        <button class="cart-empty__cta" onclick="MagneCart.closeDrawer()">Continue Shopping</button>
+      </div>
+
+      <div id="cartItems"></div>
+    </div>
+
+    <div class="cart-drawer__footer" id="cartFooter" style="display:none;">
+      <div class="cart-drawer__subtotal">
+        <span>Subtotal</span>
+        <span id="cartSubtotal">$0</span>
+      </div>
+      <p class="cart-drawer__shipping">Shipping calculated at checkout</p>
+      <button class="cart-drawer__checkout" id="checkoutBtn">Checkout</button>
+    </div>
+  </div>
+
+  <!-- Cart System -->
+  <script src="cart.js"></script>
+
+  <!-- Product Page Logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const productId = params.get('id');
+
+      if (!productId || !MagneCart.PRODUCTS[productId]) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      const product = MagneCart.PRODUCTS[productId];
+
+      // Set page title
+      document.title = `${product.name} — Magne Montfort`;
+
+      // Populate content
+      document.getElementById('breadcrumbProduct').textContent = product.name;
+      document.getElementById('productCategory').textContent = product.category;
+      document.getElementById('productName').textContent = product.name;
+      document.getElementById('productPrice').textContent = `$${product.price}`;
+      document.getElementById('productDescription').textContent = product.description;
+      document.getElementById('productMainImage').src = product.images[0];
+      document.getElementById('productMainImage').alt = product.name;
+
+      // Details accordion
+      const detailsList = document.getElementById('detailsList');
+      if (product.details) {
+        detailsList.innerHTML = product.details.map(d => `<li>${d}</li>`).join('');
+      }
+
+      // Color variants (trousers)
+      let selectedColor = null;
+      if (product.colors && product.colors.length > 0) {
+        selectedColor = product.colors[0].id;
+        const colorsDiv = document.getElementById('productColors');
+        const colorNameEl = document.getElementById('colorName');
+        const swatchesDiv = document.getElementById('colorSwatches');
+
+        colorsDiv.style.display = 'block';
+        colorNameEl.textContent = product.colors[0].name;
+
+        swatchesDiv.innerHTML = product.colors.map((c, i) => `
+          <button class="color-swatch ${i === 0 ? 'color-swatch--active' : ''}" 
+                  data-color="${c.id}" 
+                  data-image="${c.image}"
+                  data-name="${c.name}"
+                  aria-label="${c.name}">
+            <img src="${c.image}" alt="${c.name}">
+          </button>
+        `).join('');
+
+        // Color swatch click handlers
+        swatchesDiv.querySelectorAll('.color-swatch').forEach(swatch => {
+          swatch.addEventListener('click', () => {
+            swatchesDiv.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('color-swatch--active'));
+            swatch.classList.add('color-swatch--active');
+            selectedColor = swatch.dataset.color;
+            colorNameEl.textContent = swatch.dataset.name;
+            document.getElementById('productMainImage').src = swatch.dataset.image;
+          });
+        });
+      }
+
+      // Size selector
+      let selectedSize = null;
+      const sizeGrid = document.getElementById('sizeGrid');
+      sizeGrid.innerHTML = product.sizes.map(size => `
+        <button class="size-btn" data-size="${size}">${size}</button>
+      `).join('');
+
+      sizeGrid.querySelectorAll('.size-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          sizeGrid.querySelectorAll('.size-btn').forEach(b => b.classList.remove('size-btn--active'));
+          btn.classList.add('size-btn--active');
+          selectedSize = btn.dataset.size;
+
+          // Enable the add to cart button
+          const addBtn = document.getElementById('addToCartBtn');
+          addBtn.classList.add('product-actions__add--ready');
+        });
+      });
+
+      // Add to Cart
+      const addBtn = document.getElementById('addToCartBtn');
+      addBtn.addEventListener('click', () => {
+        if (!selectedSize) {
+          // Flash the size selector
+          sizeGrid.classList.add('product-sizes__grid--shake');
+          setTimeout(() => sizeGrid.classList.remove('product-sizes__grid--shake'), 600);
+          return;
+        }
+
+        MagneCart.addToCart(productId, selectedSize, 1, selectedColor);
+
+        // Button feedback
+        addBtn.innerHTML = '<span>Added to Bag ✓</span>';
+        addBtn.classList.add('product-actions__add--added');
+
+        setTimeout(() => {
+          addBtn.innerHTML = '<span>Add to Bag</span>';
+          addBtn.classList.remove('product-actions__add--added');
+        }, 2000);
+      });
+
+      // Accordion logic
+      document.querySelectorAll('.product-accordion__trigger').forEach(trigger => {
+        trigger.addEventListener('click', () => {
+          const accordion = trigger.closest('.product-accordion');
+          const isOpen = accordion.classList.contains('product-accordion--open');
+          
+          // Close all others
+          document.querySelectorAll('.product-accordion').forEach(a => a.classList.remove('product-accordion--open'));
+          
+          if (!isOpen) {
+            accordion.classList.add('product-accordion--open');
+          }
+        });
+      });
+
+    });
+  </script>
+
+</body>
+
+</html>
