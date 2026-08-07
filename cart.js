@@ -237,6 +237,60 @@ const MagneCart = (() => {
     }
   }
 
+  // ---------- Stripe Checkout ----------
+  const SUPABASE_URL = 'https://qtnhluqbwfoejukhgkcq.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0bmhsdXFid2ZvZWp1a2hna2NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0MjA1NzEsImV4cCI6MjEwMDk5NjU3MX0.QjprXidz7rXnUfopuV2ujSzOBDQ4ZHj0s8QnJDxlMwE';
+
+  async function checkout() {
+    const cart = getCart();
+    if (cart.length === 0) return;
+
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    if (checkoutBtn) {
+      checkoutBtn.textContent = 'Processing...';
+      checkoutBtn.disabled = true;
+    }
+
+    try {
+      // Determine the base URL for redirect URLs
+      const baseUrl = window.location.origin;
+
+      const response = await fetch(`${SUPABASE_URL}/functions/v1/create-checkout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+        body: JSON.stringify({
+          items: cart,
+          success_url: `${baseUrl}/order-confirmation.html?session_id={CHECKOUT_SESSION_ID}`,
+          cancel_url: `${baseUrl}/index.html`,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.url) {
+        // Redirect to Stripe Checkout
+        window.location.href = data.url;
+      } else {
+        console.error('Checkout error:', data);
+        alert('Something went wrong. Please try again.');
+        if (checkoutBtn) {
+          checkoutBtn.textContent = 'Checkout';
+          checkoutBtn.disabled = false;
+        }
+      }
+    } catch (err) {
+      console.error('Checkout error:', err);
+      alert('Something went wrong. Please try again.');
+      if (checkoutBtn) {
+        checkoutBtn.textContent = 'Checkout';
+        checkoutBtn.disabled = false;
+      }
+    }
+  }
+
   // ---------- Init ----------
   function init() {
     updateBadge();
@@ -262,6 +316,12 @@ const MagneCart = (() => {
     if (overlay) {
       overlay.addEventListener('click', closeDrawer);
     }
+
+    // Wire up checkout button
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener('click', checkout);
+    }
   }
 
   // Auto-init when DOM is ready
@@ -284,6 +344,8 @@ const MagneCart = (() => {
     openDrawer,
     closeDrawer,
     updateBadge,
-    renderDrawer
+    renderDrawer,
+    checkout
   };
 })();
+

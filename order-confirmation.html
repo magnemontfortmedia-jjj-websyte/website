@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Confirmed — Magne Montfort</title>
+  <meta name="description" content="Your Magne Montfort order has been confirmed.">
+  <meta name="theme-color" content="#0a0a0a">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .confirmation {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      background: var(--color-white);
+    }
+
+    .confirmation__card {
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .confirmation__check {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      border: 2px solid var(--color-noir);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 32px;
+      opacity: 0;
+      transform: scale(0.5);
+      animation: checkIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    }
+
+    @keyframes checkIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .confirmation__check svg {
+      width: 28px;
+      height: 28px;
+    }
+
+    .confirmation__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-noir);
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.5s forwards;
+    }
+
+    .confirmation__text {
+      font-family: var(--font-accent);
+      font-size: 1rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--color-ash);
+      line-height: 1.7;
+      margin-bottom: 12px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.7s forwards;
+    }
+
+    .confirmation__ref {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-silver);
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.9s forwards;
+    }
+
+    .confirmation__divider {
+      width: 40px;
+      height: 1px;
+      background: var(--color-pearl);
+      margin: 0 auto 40px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.9s forwards;
+    }
+
+    .confirmation__cta {
+      display: inline-block;
+      padding: 14px 40px;
+      background: var(--color-noir);
+      color: var(--color-white);
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 1.1s forwards;
+    }
+
+    .confirmation__cta:hover {
+      background: var(--color-charcoal);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="confirmation">
+    <div class="confirmation__card">
+      <div class="confirmation__check">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+
+      <h1 class="confirmation__title">Order Confirmed</h1>
+      <p class="confirmation__text">
+        Thank you for your purchase. We are preparing your order and will notify you once it has shipped.
+      </p>
+      <p class="confirmation__text" style="animation-delay: 0.8s;">
+        A confirmation email has been sent to your inbox.
+      </p>
+      <p class="confirmation__ref" id="orderRef"></p>
+      <div class="confirmation__divider"></div>
+      <a href="index.html" class="confirmation__cta">Continue Shopping</a>
+    </div>
+  </div>
+
+  <script>
+    // Clear the cart after successful purchase
+    localStorage.removeItem('magne_montfort_cart');
+
+    // Show order reference from Stripe session ID
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get('session_id');
+    const refEl = document.getElementById('orderRef');
+    if (sessionId && refEl) {
+      refEl.textContent = `Order ref: ${sessionId.slice(-8).toUpperCase()}`;
+    }
+  </script>
+</body>
+
+</html>
