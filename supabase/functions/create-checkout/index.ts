@@ -43,7 +43,45 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { items, success_url, cancel_url } = await req.json();
+    const { items, success_url, cancel_url, previous_session_id } = await req.json();
+
+    // ---------- Expire Previous Session & Release Stock ----------
+    if (previous_session_id) {
+      try {
+        // Fetch the old session to get its reserved items
+        const oldSessionRes = await fetch(`https://api.stripe.com/v1/checkout/sessions/${previous_session_id}`, {
+          headers: { Authorization: `Bearer ${STRIPE_SECRET_KEY}` },
+        });
+        
+        if (oldSessionRes.ok) {
+          const oldSession = await oldSessionRes.json();
+          
+          if (oldSession.status === 'open' && oldSession.metadata?.reserved_items) {
+            // Expire it in Stripe
+            await fetch(`https://api.stripe.com/v1/checkout/sessions/${previous_session_id}/expire`, {
+              method: 'POST',
+              headers: { Authorization: `Bearer ${STRIPE_SECRET_KEY}` },
+            });
+            
+            // Release the stock synchronously using our idempotent RPC
+            await fetch(`${SUPABASE_URL}/rest/v1/rpc/release_session_stock`, {
+              method: "POST",
+              headers: {
+                apikey: SUPABASE_SERVICE_ROLE_KEY,
+                Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                p_session_id: previous_session_id,
+                p_items: JSON.parse(oldSession.metadata.reserved_items),
+              }),
+            });
+          }
+        }
+      } catch (err) {
+        console.error("Error expiring previous session:", err);
+      }
+    }
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return new Response(
@@ -224,25 +262,24 @@ Deno.serve(async (req) => {
  * Roll back stock reservations for items that were already reserved
  */
 async function rollbackReservations(items: CartItem[]) {
-  for (const item of items) {
-    try {
-      await fetch(`${SUPABASE_URL}/rest/v1/rpc/release_stock`, {
-        method: "POST",
-        headers: {
-          apikey: SUPABASE_SERVICE_ROLE_KEY,
-          Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          p_product_id: item.productId,
-          p_size: item.size,
-          p_color: item.color || null,
-          p_qty: item.qty,
-        }),
-      });
-    } catch (err) {
-      console.error("Failed to release stock for", item, err);
-    }
+  // Use a temporary unique session ID for the rollback so it fits our idempotent RPC
+  const tempSessionId = 'rollback_' + crypto.randomUUID();
+  
+  try {
+    await fetch(`${SUPABASE_URL}/rest/v1/rpc/release_session_stock`, {
+      method: "POST",
+      headers: {
+        apikey: SUPABASE_SERVICE_ROLE_KEY,
+        Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        p_session_id: tempSessionId,
+        p_items: items,
+      }),
+    });
+  } catch (err) {
+    console.error("Failed to rollback stock", err);
   }
 }
 

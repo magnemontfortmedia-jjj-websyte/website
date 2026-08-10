@@ -241,6 +241,8 @@ const MagneCart = (() => {
   const SUPABASE_URL = 'https://qtnhluqbwfoejukhgkcq.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0bmhsdXFid2ZvZWp1a2hna2NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0MjA1NzEsImV4cCI6MjEwMDk5NjU3MX0.QjprXidz7rXnUfopuV2ujSzOBDQ4ZHj0s8QnJDxlMwE';
 
+  const CHECKOUT_SESSION_KEY = 'magne_montfort_checkout_session';
+
   async function checkout() {
     const cart = getCart();
     if (cart.length === 0) return;
@@ -254,6 +256,27 @@ const MagneCart = (() => {
     try {
       // Determine the base URL for redirect URLs
       const baseUrl = window.location.origin;
+      const cartHash = JSON.stringify(cart);
+      
+      // Check for existing session in localStorage
+      const existingSessionStr = localStorage.getItem(CHECKOUT_SESSION_KEY);
+      let previousSessionId = null;
+      
+      if (existingSessionStr) {
+        try {
+          const existing = JSON.parse(existingSessionStr);
+          // If cart hasn't changed and session hasn't expired (give a 5 min buffer to the 30 min max)
+          if (existing.cartHash === cartHash && Date.now() < existing.expiresAt - 5 * 60000) {
+            // Smart Re-use: Cart is identical, send them back to the exact same Stripe session
+            window.location.href = existing.url;
+            return;
+          }
+          // Cart changed, we need to explicitly expire the old session to free its stock
+          previousSessionId = existing.sessionId;
+        } catch (e) {
+          // Ignore parse errors
+        }
+      }
 
       const response = await fetch(`${SUPABASE_URL}/functions/v1/create-checkout`, {
         method: 'POST',
@@ -265,12 +288,21 @@ const MagneCart = (() => {
           items: cart,
           success_url: `${baseUrl}/order-confirmation.html?session_id={CHECKOUT_SESSION_ID}`,
           cancel_url: `${baseUrl}/index.html`,
+          previous_session_id: previousSessionId,
         }),
       });
 
       const data = await response.json();
 
       if (data.url) {
+        // Save the new session to prevent cart hoarding on refresh
+        localStorage.setItem(CHECKOUT_SESSION_KEY, JSON.stringify({
+          sessionId: data.sessionId,
+          url: data.url,
+          cartHash: cartHash,
+          expiresAt: Date.now() + 30 * 60000 // 30 minutes
+        }));
+        
         // Redirect to Stripe Checkout
         window.location.href = data.url;
       } else if (data.out_of_stock) {

@@ -157,24 +157,25 @@ Deno.serve(async (req) => {
         try {
           const reservedItems = JSON.parse(reservedItemsStr);
 
-          for (const item of reservedItems) {
-            await fetch(`${SUPABASE_URL}/rest/v1/rpc/release_stock`, {
-              method: "POST",
-              headers: {
-                apikey: SUPABASE_SERVICE_ROLE_KEY,
-                Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                p_product_id: item.productId,
-                p_size: item.size,
-                p_color: item.color || null,
-                p_qty: item.qty,
-              }),
-            });
+          const releaseRes = await fetch(`${SUPABASE_URL}/rest/v1/rpc/release_session_stock`, {
+            method: "POST",
+            headers: {
+              apikey: SUPABASE_SERVICE_ROLE_KEY,
+              Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              p_session_id: session.id,
+              p_items: reservedItems,
+            }),
+          });
+          
+          const wasReleased = await releaseRes.json();
+          if (wasReleased) {
+            console.log("Released stock for expired session:", session.id);
+          } else {
+            console.log("Stock for session", session.id, "was already released.");
           }
-
-          console.log("Released stock for expired session:", session.id);
         } catch (err) {
           console.error("Failed to release stock for expired session:", err);
         }
