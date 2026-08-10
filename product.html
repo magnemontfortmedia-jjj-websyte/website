@@ -248,7 +248,10 @@
 
   <!-- Product Page Logic -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
+    const SUPABASE_URL = 'https://qtnhluqbwfoejukhgkcq.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0bmhsdXFid2ZvZWp1a2hna2NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0MjA1NzEsImV4cCI6MjEwMDk5NjU3MX0.QjprXidz7rXnUfopuV2ujSzOBDQ4ZHj0s8QnJDxlMwE';
+
+    document.addEventListener('DOMContentLoaded', async () => {
       const params = new URLSearchParams(window.location.search);
       const productId = params.get('id');
 
@@ -277,7 +280,87 @@
         detailsList.innerHTML = product.details.map(d => `<li>${d}</li>`).join('');
       }
 
-      // Color variants (trousers)
+      // ---------- Fetch Stock from Supabase ----------
+      let stockData = {};
+
+      async function fetchStock(color) {
+        try {
+          let url = `${SUPABASE_URL}/rest/v1/inventory?product_id=eq.${productId}&select=size,quantity`;
+          if (color) {
+            url += `&color=eq.${color}`;
+          } else {
+            url += `&color=is.null`;
+          }
+
+          const res = await fetch(url, {
+            headers: {
+              apikey: SUPABASE_ANON_KEY,
+              Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+            },
+          });
+
+          const data = await res.json();
+          stockData = {};
+          data.forEach(row => {
+            stockData[row.size] = row.quantity;
+          });
+
+          renderSizes();
+        } catch (err) {
+          console.error('Failed to fetch stock:', err);
+          // Fallback: show all sizes as available
+          product.sizes.forEach(s => { stockData[s] = 99; });
+          renderSizes();
+        }
+      }
+
+      // ---------- Size Selector with Stock ----------
+      let selectedSize = null;
+      const sizeGrid = document.getElementById('sizeGrid');
+      const addBtn = document.getElementById('addToCartBtn');
+
+      function renderSizes() {
+        selectedSize = null;
+        addBtn.classList.remove('product-actions__add--ready');
+
+        sizeGrid.innerHTML = product.sizes.map(size => {
+          const qty = stockData[size] ?? 0;
+          const soldOut = qty <= 0;
+          const lowStock = qty > 0 && qty <= 3;
+
+          let label = size;
+          let extraClass = '';
+
+          if (soldOut) {
+            extraClass = 'size-btn--sold-out';
+          } else if (lowStock) {
+            extraClass = 'size-btn--low-stock';
+          }
+
+          return `
+            <button class="size-btn ${extraClass}" 
+                    data-size="${size}" 
+                    data-qty="${qty}"
+                    ${soldOut ? 'disabled' : ''}>
+              <span class="size-btn__label">${size}</span>
+              ${lowStock ? `<span class="size-btn__stock">Only ${qty} left</span>` : ''}
+              ${soldOut ? `<span class="size-btn__stock">Sold Out</span>` : ''}
+            </button>
+          `;
+        }).join('');
+
+        // Re-attach click handlers
+        sizeGrid.querySelectorAll('.size-btn:not([disabled])').forEach(btn => {
+          btn.addEventListener('click', () => {
+            sizeGrid.querySelectorAll('.size-btn').forEach(b => b.classList.remove('size-btn--active'));
+            btn.classList.add('size-btn--active');
+            selectedSize = btn.dataset.size;
+            addBtn.classList.add('product-actions__add--ready');
+          });
+        });
+      }
+
+      // ---------- Color Variants (Trousers) ----------
       let selectedColor = null;
       if (product.colors && product.colors.length > 0) {
         selectedColor = product.colors[0].id;
@@ -306,36 +389,29 @@
             selectedColor = swatch.dataset.color;
             colorNameEl.textContent = swatch.dataset.name;
             document.getElementById('productMainImage').src = swatch.dataset.image;
+
+            // Re-fetch stock for the new color
+            fetchStock(selectedColor);
           });
         });
       }
 
-      // Size selector
-      let selectedSize = null;
-      const sizeGrid = document.getElementById('sizeGrid');
-      sizeGrid.innerHTML = product.sizes.map(size => `
-        <button class="size-btn" data-size="${size}">${size}</button>
-      `).join('');
+      // Initial stock fetch
+      await fetchStock(selectedColor);
 
-      sizeGrid.querySelectorAll('.size-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          sizeGrid.querySelectorAll('.size-btn').forEach(b => b.classList.remove('size-btn--active'));
-          btn.classList.add('size-btn--active');
-          selectedSize = btn.dataset.size;
-
-          // Enable the add to cart button
-          const addBtn = document.getElementById('addToCartBtn');
-          addBtn.classList.add('product-actions__add--ready');
-        });
-      });
-
-      // Add to Cart
-      const addBtn = document.getElementById('addToCartBtn');
+      // ---------- Add to Cart ----------
       addBtn.addEventListener('click', () => {
         if (!selectedSize) {
-          // Flash the size selector
           sizeGrid.classList.add('product-sizes__grid--shake');
           setTimeout(() => sizeGrid.classList.remove('product-sizes__grid--shake'), 600);
+          return;
+        }
+
+        // Double-check stock
+        const qty = stockData[selectedSize] ?? 0;
+        if (qty <= 0) {
+          alert('Sorry, this size is no longer available.');
+          fetchStock(selectedColor);
           return;
         }
 
@@ -351,15 +427,12 @@
         }, 2000);
       });
 
-      // Accordion logic
+      // ---------- Accordions ----------
       document.querySelectorAll('.product-accordion__trigger').forEach(trigger => {
         trigger.addEventListener('click', () => {
           const accordion = trigger.closest('.product-accordion');
           const isOpen = accordion.classList.contains('product-accordion--open');
-          
-          // Close all others
           document.querySelectorAll('.product-accordion').forEach(a => a.classList.remove('product-accordion--open'));
-          
           if (!isOpen) {
             accordion.classList.add('product-accordion--open');
           }

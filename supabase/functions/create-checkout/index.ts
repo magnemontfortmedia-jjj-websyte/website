@@ -1,6 +1,8 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
 const STRIPE_SECRET_KEY = Deno.env.get("STRIPE_SECRET_KEY")!;
+const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
+const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -27,6 +29,13 @@ const PRODUCTS: Record<string, { name: string; price: number; image: string }> =
   },
 };
 
+interface CartItem {
+  productId: string;
+  size: string;
+  qty: number;
+  color?: string | null;
+}
+
 Deno.serve(async (req) => {
   // Handle CORS preflight
   if (req.method === "OPTIONS") {
@@ -46,13 +55,70 @@ Deno.serve(async (req) => {
       );
     }
 
-    // Build Stripe line items from cart
-    const line_items = items.map((item: { productId: string; size: string; qty: number; color?: string }) => {
+    // ---------- Atomic Stock Reservation ----------
+    // Reserve stock for each item BEFORE creating the Stripe session.
+    // If any reservation fails, roll back all previous reservations.
+    const reservedItems: CartItem[] = [];
+
+    for (const item of items as CartItem[]) {
       const product = PRODUCTS[item.productId];
       if (!product) {
-        throw new Error(`Unknown product: ${item.productId}`);
+        // Roll back any already-reserved items
+        await rollbackReservations(reservedItems);
+        return new Response(
+          JSON.stringify({ error: `Unknown product: ${item.productId}` }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          }
+        );
       }
 
+      // Call the atomic reserve_stock function
+      const reserveRes = await fetch(`${SUPABASE_URL}/rest/v1/rpc/reserve_stock`, {
+        method: "POST",
+        headers: {
+          apikey: SUPABASE_SERVICE_ROLE_KEY,
+          Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          p_product_id: item.productId,
+          p_size: item.size,
+          p_color: item.color || null,
+          p_qty: item.qty,
+        }),
+      });
+
+      const rowsAffected = await reserveRes.json();
+
+      if (rowsAffected === 0) {
+        // Reservation failed — not enough stock
+        await rollbackReservations(reservedItems);
+
+        const colorLabel = item.color
+          ? ` in ${item.color.charAt(0).toUpperCase() + item.color.slice(1)}`
+          : "";
+
+        return new Response(
+          JSON.stringify({
+            error: `Sorry, ${product.name} (Size ${item.size}${colorLabel}) is no longer available.`,
+            out_of_stock: true,
+          }),
+          {
+            status: 409,
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
+          }
+        );
+      }
+
+      // Track this reservation so we can roll back if a later item fails
+      reservedItems.push(item);
+    }
+
+    // ---------- Build Stripe Line Items ----------
+    const line_items = (items as CartItem[]).map((item) => {
+      const product = PRODUCTS[item.productId]!;
       const colorLabel = item.color
         ? ` — ${item.color.charAt(0).toUpperCase() + item.color.slice(1)}`
         : "";
@@ -71,7 +137,8 @@ Deno.serve(async (req) => {
       };
     });
 
-    // Create Stripe Checkout Session
+    // ---------- Create Stripe Checkout Session ----------
+    // 30-minute expiry so reserved stock isn't held forever
     const stripeResponse = await fetch("https://api.stripe.com/v1/checkout/sessions", {
       method: "POST",
       headers: {
@@ -81,7 +148,11 @@ Deno.serve(async (req) => {
       body: new URLSearchParams(
         flattenParams({
           mode: "payment",
+          expires_at: Math.floor(Date.now() / 1000) + 1800, // 30 minutes
           line_items,
+          metadata: {
+            reserved_items: JSON.stringify(items),
+          },
           shipping_address_collection: {
             allowed_countries: ["AU", "US", "GB", "NZ", "CA", "FR", "DE", "IT", "ES", "JP"],
           },
@@ -119,6 +190,8 @@ Deno.serve(async (req) => {
 
     if (!stripeResponse.ok) {
       console.error("Stripe API error:", session);
+      // Roll back stock since Stripe session creation failed
+      await rollbackReservations(reservedItems);
       return new Response(
         JSON.stringify({ error: "Failed to create checkout session", details: session }),
         {
@@ -138,7 +211,7 @@ Deno.serve(async (req) => {
   } catch (err) {
     console.error("Error creating checkout:", err);
     return new Response(
-      JSON.stringify({ error: err.message }),
+      JSON.stringify({ error: (err as Error).message }),
       {
         status: 500,
         headers: { ...corsHeaders, "Content-Type": "application/json" },
@@ -148,9 +221,33 @@ Deno.serve(async (req) => {
 });
 
 /**
+ * Roll back stock reservations for items that were already reserved
+ */
+async function rollbackReservations(items: CartItem[]) {
+  for (const item of items) {
+    try {
+      await fetch(`${SUPABASE_URL}/rest/v1/rpc/release_stock`, {
+        method: "POST",
+        headers: {
+          apikey: SUPABASE_SERVICE_ROLE_KEY,
+          Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          p_product_id: item.productId,
+          p_size: item.size,
+          p_color: item.color || null,
+          p_qty: item.qty,
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to release stock for", item, err);
+    }
+  }
+}
+
+/**
  * Flatten nested objects into Stripe's URL-encoded format
- * e.g., { line_items: [{ price_data: { currency: "aud" } }] }
- * becomes "line_items[0][price_data][currency]=aud"
  */
 function flattenParams(
   obj: Record<string, unknown>,

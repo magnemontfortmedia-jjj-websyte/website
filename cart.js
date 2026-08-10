@@ -26,7 +26,7 @@ const MagneCart = (() => {
       images: [
         'assets/images/bomber.png'
       ],
-      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+      sizes: ['XS', 'S', 'M', 'L', 'XL']
     },
     cable_knit: {
       id: 'cable_knit',
@@ -46,7 +46,7 @@ const MagneCart = (() => {
       images: [
         'assets/images/cable_knit.png'
       ],
-      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+      sizes: ['XS', 'S', 'M', 'L', 'XL']
     },
     trousers: {
       id: 'trousers',
@@ -70,7 +70,7 @@ const MagneCart = (() => {
       images: [
         'assets/images/trousers_navy.png'
       ],
-      sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+      sizes: ['XS', 'S', 'M', 'L', 'XL']
     }
   };
 
@@ -273,6 +273,13 @@ const MagneCart = (() => {
       if (data.url) {
         // Redirect to Stripe Checkout
         window.location.href = data.url;
+      } else if (data.out_of_stock) {
+        // Stock reservation failed — show friendly message
+        alert(data.error);
+        if (checkoutBtn) {
+          checkoutBtn.textContent = 'Checkout';
+          checkoutBtn.disabled = false;
+        }
       } else {
         console.error('Checkout error:', data);
         alert('Something went wrong. Please try again.');

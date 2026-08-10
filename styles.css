@@ -2500,6 +2500,48 @@ a.collection-card {
   color: var(--color-white);
 }
 
+.size-btn--sold-out {
+  opacity: 0.35;
+  cursor: not-allowed;
+  text-decoration: line-through;
+  border-color: #eee;
+}
+
+.size-btn--sold-out:hover {
+  border-color: #eee;
+  color: var(--color-ash);
+}
+
+.size-btn--low-stock {
+  border-color: #c9a96e;
+}
+
+.size-btn__label {
+  display: block;
+}
+
+.size-btn__stock {
+  display: block;
+  font-size: 0.5rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-top: 2px;
+  text-decoration: none;
+}
+
+.size-btn--sold-out .size-btn__stock {
+  color: var(--color-silver);
+}
+
+.size-btn--sold-out .size-btn__label {
+  text-decoration: line-through;
+}
+
+.size-btn--sold-out {
+  text-decoration: none;
+}
+
 /* ---------- Actions (Add to Cart) ---------- */
 .product-actions {
   display: flex;
