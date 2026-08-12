@@ -256,24 +256,43 @@ const MagneCart = (() => {
 
     upsellContainer.style.display = 'block';
 
-    // Pick the first available upsell
-    const upsellProduct = availableUpsells[0];
-    const image = upsellProduct.images[0];
-    const defaultSize = upsellProduct.sizes ? upsellProduct.sizes[2] || 'M' : 'M';
-    const defaultColor = upsellProduct.colors ? upsellProduct.colors[0].id : null;
-    const colorArg = defaultColor ? `, 1, '${defaultColor}'` : `, 1`;
+    const upsellItemsHtml = availableUpsells.map(upsellProduct => {
+      const image = upsellProduct.images[0];
+      const defaultSize = upsellProduct.sizes ? upsellProduct.sizes[2] || 'M' : 'M';
+      const defaultColor = upsellProduct.colors ? upsellProduct.colors[0].id : null;
+      const colorArg = defaultColor ? `, 1, '${defaultColor}'` : `, 1`;
+      
+      const sizeOptions = (upsellProduct.sizes || ['XS', 'S', 'M', 'L', 'XL'])
+        .map(size => `<option value="${size}" ${size === defaultSize ? 'selected' : ''}>${size}</option>`)
+        .join('');
+
+      return `
+        <div class="cart-upsell__item">
+          <img src="${image}" alt="${upsellProduct.name}" class="cart-upsell__img">
+          <div class="cart-upsell__info">
+            <a href="product.html?id=${upsellProduct.id}" class="cart-upsell__name">${upsellProduct.name}</a>
+            <p class="cart-upsell__price">$${upsellProduct.price}</p>
+            <div class="cart-upsell__actions">
+              <select class="cart-upsell__size" id="upsell-size-${upsellProduct.id}" aria-label="Select size">
+                ${sizeOptions}
+              </select>
+              <button class="cart-upsell__add" onclick="
+                const sizeEl = document.getElementById('upsell-size-${upsellProduct.id}');
+                const size = sizeEl ? sizeEl.value : '${defaultSize}';
+                MagneCart.addToCart('${upsellProduct.id}', size${colorArg});
+              " aria-label="Add ${upsellProduct.name}">
+                Add
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
 
     upsellContainer.innerHTML = `
       <div class="cart-upsell__header">Complete the look</div>
-      <div class="cart-upsell__item">
-        <img src="${image}" alt="${upsellProduct.name}" class="cart-upsell__img">
-        <div class="cart-upsell__info">
-          <p class="cart-upsell__name">${upsellProduct.name}</p>
-          <p class="cart-upsell__price">$${upsellProduct.price}</p>
-        </div>
-        <button class="cart-upsell__add" onclick="MagneCart.addToCart('${upsellProduct.id}', '${defaultSize}'${colorArg})" aria-label="Add ${upsellProduct.name}">
-          Add
-        </button>
+      <div class="cart-upsell__list">
+        ${upsellItemsHtml}
       </div>
     `;
   }

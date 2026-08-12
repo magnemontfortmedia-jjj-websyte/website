@@ -2251,6 +2251,12 @@ a.collection-card {
   margin-bottom: 12px;
 }
 
+.cart-upsell__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .cart-upsell__item {
   display: flex;
   align-items: center;
@@ -2278,12 +2284,36 @@ a.collection-card {
   font-family: var(--font-body);
   font-size: 0.75rem;
   color: var(--color-noir);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.cart-upsell__name:hover {
+  opacity: 0.7;
 }
 
 .cart-upsell__price {
   font-family: var(--font-body);
   font-size: 0.7rem;
   color: var(--color-charcoal);
+}
+
+.cart-upsell__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.cart-upsell__size {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  background: var(--color-white);
+  color: var(--color-noir);
+  outline: none;
+  cursor: pointer;
 }
 
 .cart-upsell__add {
@@ -2294,7 +2324,7 @@ a.collection-card {
   background: var(--color-white);
   border: 1px solid var(--color-noir);
   color: var(--color-noir);
-  padding: 6px 12px;
+  padding: 5px 12px;
   cursor: pointer;
   transition: all 0.2s;
 }
