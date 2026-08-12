@@ -5,6 +5,7 @@
 
 const MagneCart = (() => {
   const STORAGE_KEY = 'magne_montfort_cart';
+  const STORAGE_IGNORED_KEY = 'magne_montfort_cart_ignored';
 
   // ---------- Product Catalog ----------
   const PRODUCTS = {
@@ -89,6 +90,28 @@ const MagneCart = (() => {
     renderDrawer();
   }
 
+  function getIgnoredProducts() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_IGNORED_KEY)) || [];
+    } catch {
+      return [];
+    }
+  }
+
+  function markAsIgnored(productId) {
+    const ignored = getIgnoredProducts();
+    if (!ignored.includes(productId)) {
+      ignored.push(productId);
+      localStorage.setItem(STORAGE_IGNORED_KEY, JSON.stringify(ignored));
+    }
+  }
+
+  function unmarkAsIgnored(productId) {
+    const ignored = getIgnoredProducts();
+    const newIgnored = ignored.filter(id => id !== productId);
+    localStorage.setItem(STORAGE_IGNORED_KEY, JSON.stringify(newIgnored));
+  }
+
   function addToCart(productId, size, qty = 1, color = null) {
     const cart = getCart();
     const existing = cart.find(
@@ -101,12 +124,17 @@ const MagneCart = (() => {
       cart.push({ productId, size, qty, color });
     }
 
+    unmarkAsIgnored(productId); // Remove from ignore list if they add it again
     saveCart(cart);
     openDrawer();
   }
 
   function removeFromCart(index) {
     const cart = getCart();
+    const removedItem = cart[index];
+    if (removedItem) {
+      markAsIgnored(removedItem.productId);
+    }
     cart.splice(index, 1);
     saveCart(cart);
   }
@@ -114,6 +142,10 @@ const MagneCart = (() => {
   function updateQuantity(index, newQty) {
     const cart = getCart();
     if (newQty <= 0) {
+      const removedItem = cart[index];
+      if (removedItem) {
+        markAsIgnored(removedItem.productId);
+      }
       cart.splice(index, 1);
     } else {
       cart[index].qty = newQty;
@@ -245,9 +277,10 @@ const MagneCart = (() => {
 
     const cart = getCart();
     const cartProductIds = new Set(cart.map(item => item.productId));
+    const ignoredProductIds = new Set(getIgnoredProducts());
 
-    // Find products not in cart
-    const availableUpsells = Object.values(PRODUCTS).filter(p => !cartProductIds.has(p.id));
+    // Find products not in cart and not ignored
+    const availableUpsells = Object.values(PRODUCTS).filter(p => !cartProductIds.has(p.id) && !ignoredProductIds.has(p.id));
 
     if (availableUpsells.length === 0 || cart.length === 0) {
       upsellContainer.style.display = 'none';
