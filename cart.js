@@ -292,12 +292,24 @@ const MagneCart = (() => {
     const upsellItemsHtml = availableUpsells.map(upsellProduct => {
       const image = upsellProduct.images[0];
       const defaultSize = upsellProduct.sizes ? upsellProduct.sizes[2] || 'M' : 'M';
-      const defaultColor = upsellProduct.colors ? upsellProduct.colors[0].id : null;
-      const colorArg = defaultColor ? `, 1, '${defaultColor}'` : `, 1`;
+      const defaultColor = upsellProduct.colors ? upsellProduct.colors[0].id : '';
       
       const sizeOptions = (upsellProduct.sizes || ['XS', 'S', 'M', 'L', 'XL'])
         .map(size => `<option value="${size}" ${size === defaultSize ? 'selected' : ''}>${size}</option>`)
         .join('');
+
+      let colorSelectorHtml = '';
+      if (upsellProduct.colors) {
+        const colorOptions = upsellProduct.colors.map(color => 
+          `<option value="${color.id}">${color.name}</option>`
+        ).join('');
+        
+        colorSelectorHtml = `
+          <select class="cart-upsell__size" id="upsell-color-${upsellProduct.id}" aria-label="Select color" style="margin-left:4px;">
+            ${colorOptions}
+          </select>
+        `;
+      }
 
       return `
         <div class="cart-upsell__item">
@@ -309,10 +321,13 @@ const MagneCart = (() => {
               <select class="cart-upsell__size" id="upsell-size-${upsellProduct.id}" aria-label="Select size">
                 ${sizeOptions}
               </select>
+              ${colorSelectorHtml}
               <button class="cart-upsell__add" onclick="
                 const sizeEl = document.getElementById('upsell-size-${upsellProduct.id}');
                 const size = sizeEl ? sizeEl.value : '${defaultSize}';
-                MagneCart.addToCart('${upsellProduct.id}', size${colorArg});
+                const colorEl = document.getElementById('upsell-color-${upsellProduct.id}');
+                const color = colorEl ? colorEl.value : '${defaultColor}';
+                MagneCart.addToCart('${upsellProduct.id}', size, 1, color ? color : null);
               " aria-label="Add ${upsellProduct.name}">
                 Add
               </button>
