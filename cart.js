@@ -235,6 +235,47 @@ const MagneCart = (() => {
     if (subtotalEl) {
       subtotalEl.textContent = `$${getCartTotal().toLocaleString()}`;
     }
+
+    renderUpsell();
+  }
+
+  function renderUpsell() {
+    const upsellContainer = document.getElementById('cartUpsell');
+    if (!upsellContainer) return;
+
+    const cart = getCart();
+    const cartProductIds = new Set(cart.map(item => item.productId));
+
+    // Find products not in cart
+    const availableUpsells = Object.values(PRODUCTS).filter(p => !cartProductIds.has(p.id));
+
+    if (availableUpsells.length === 0 || cart.length === 0) {
+      upsellContainer.style.display = 'none';
+      return;
+    }
+
+    upsellContainer.style.display = 'block';
+
+    // Pick the first available upsell
+    const upsellProduct = availableUpsells[0];
+    const image = upsellProduct.images[0];
+    const defaultSize = upsellProduct.sizes ? upsellProduct.sizes[2] || 'M' : 'M';
+    const defaultColor = upsellProduct.colors ? upsellProduct.colors[0].id : null;
+    const colorArg = defaultColor ? `, 1, '${defaultColor}'` : `, 1`;
+
+    upsellContainer.innerHTML = `
+      <div class="cart-upsell__header">Complete the look</div>
+      <div class="cart-upsell__item">
+        <img src="${image}" alt="${upsellProduct.name}" class="cart-upsell__img">
+        <div class="cart-upsell__info">
+          <p class="cart-upsell__name">${upsellProduct.name}</p>
+          <p class="cart-upsell__price">$${upsellProduct.price}</p>
+        </div>
+        <button class="cart-upsell__add" onclick="MagneCart.addToCart('${upsellProduct.id}', '${defaultSize}'${colorArg})" aria-label="Add ${upsellProduct.name}">
+          Add
+        </button>
+      </div>
+    `;
   }
 
   // ---------- Stripe Checkout ----------
