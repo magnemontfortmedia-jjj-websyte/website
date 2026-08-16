@@ -440,6 +440,8 @@ const MagneCart = (() => {
 
   // ---------- Init ----------
   function init() {
+    // Reset ignored upsell products each page load (session-scoped)
+    localStorage.removeItem(STORAGE_IGNORED_KEY);
     updateBadge();
     renderDrawer();
 

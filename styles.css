@@ -1234,6 +1234,33 @@ button {
   fill: currentColor;
 }
 
+/* Minimal Footer */
+.footer--minimal {
+  padding: var(--space-xl) 0 var(--space-lg);
+}
+
+.footer-minimal {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.footer-minimal__logo {
+  display: flex;
+  align-items: center;
+}
+
+.footer-minimal__emblem {
+  height: 60px;
+  width: auto;
+  opacity: 0.85;
+}
+
+.footer-minimal__social {
+  display: flex;
+  gap: 1.2rem;
+}
+
 /* ---------- Scroll Reveal Animations ---------- */
 .reveal {
   opacity: 0;
