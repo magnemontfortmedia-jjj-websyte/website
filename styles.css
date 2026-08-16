@@ -1241,25 +1241,38 @@ button {
 
 .footer-minimal {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.2rem;
 }
 
 .footer-minimal__logo {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .footer-minimal__emblem {
-  height: 60px;
+  height: 140px;
   width: auto;
   opacity: 0.85;
+}
+
+.footer-minimal__copyright {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--color-silver);
+  letter-spacing: 0.08em;
+  margin: 0;
 }
 
 .footer-minimal__social {
   display: flex;
   gap: 1.2rem;
+  justify-content: center;
 }
+
 
 /* ---------- Scroll Reveal Animations ---------- */
 .reveal {

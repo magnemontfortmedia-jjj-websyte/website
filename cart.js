@@ -480,6 +480,17 @@ const MagneCart = (() => {
     init();
   }
 
+  // Fix: Reset checkout button when navigating back via browser (bfcache)
+  window.addEventListener('pageshow', (event) => {
+    const checkoutBtn = document.getElementById('checkoutBtn');
+    if (checkoutBtn && (checkoutBtn.disabled || checkoutBtn.textContent.trim() === 'Processing...')) {
+      checkoutBtn.textContent = 'Checkout';
+      checkoutBtn.disabled = false;
+    }
+    // Clear stale session so a fresh one is created on next checkout
+    localStorage.removeItem(CHECKOUT_SESSION_KEY);
+  });
+
   // Public API
   return {
     PRODUCTS,
