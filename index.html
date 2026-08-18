@@ -16,7 +16,11 @@
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap"
     rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=5">
+  <!-- Snipcart -->
+  <link rel="preconnect" href="https://cdn.snipcart.com">
+  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.7.1/default/snipcart.css" />
+
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 
 <body>
@@ -431,49 +435,60 @@
 
   </div><!-- /.site-content -->
 
-  <!-- Cart Overlay -->
-  <div class="cart-overlay" id="cartOverlay"></div>
-
-  <!-- Cart Drawer -->
-  <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-drawer__header">
-      <h3 class="cart-drawer__title">Your Bag</h3>
-      <button class="cart-drawer__close" id="cartClose" aria-label="Close cart">
-        <svg viewBox="0 0 24 24" width="20" height="20">
-          <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </button>
-    </div>
-
-    <div class="cart-drawer__body">
-      <!-- Empty State -->
-      <div class="cart-empty" id="cartEmpty">
-        <svg viewBox="0 0 24 24" width="48" height="48" style="stroke: var(--color-pearl); fill: none; stroke-width: 1;">
-          <path d="M6 6h12l1 14H5L6 6z" />
-          <path d="M9 6V4a3 3 0 0 1 6 0v2" />
-        </svg>
-        <p class="cart-empty__text">Your bag is empty</p>
-        <button class="cart-empty__cta" onclick="MagneCart.closeDrawer()">Continue Shopping</button>
-      </div>
-
-      <!-- Cart Items -->
-      <div id="cartItems"></div>
-    </div>
-
-    <div class="cart-drawer__footer" id="cartFooter" style="display:none;">
-      <div id="cartUpsell" class="cart-upsell"></div>
-      <div class="cart-drawer__subtotal">
-        <span>Subtotal</span>
-        <span id="cartSubtotal">$0</span>
-      </div>
-      <p class="cart-drawer__shipping">Shipping calculated at checkout</p>
-      <button class="cart-drawer__checkout" id="checkoutBtn">Checkout</button>
-    </div>
+  <!-- Hidden Snipcart product definitions for crawler validation -->
+  <div hidden>
+    <button class="snipcart-add-item"
+      data-item-id="bomber-M"
+      data-item-name="Shearling Bomber Jacket"
+      data-item-price="500.00"
+      data-item-url="/product.html?id=bomber"
+      data-item-image="/assets/images/bomber.png"
+      data-item-description="Size: M"
+      data-item-custom1-name="Size"
+      data-item-custom1-options="XS|S|M|L|XL"
+      data-item-custom1-value="M">
+    </button>
+    <button class="snipcart-add-item"
+      data-item-id="cable_knit-M"
+      data-item-name="Cable Knit Sweater"
+      data-item-price="300.00"
+      data-item-url="/product.html?id=cable_knit"
+      data-item-image="/assets/images/cable_knit.png"
+      data-item-description="Size: M"
+      data-item-custom1-name="Size"
+      data-item-custom1-options="XS|S|M|L|XL"
+      data-item-custom1-value="M">
+    </button>
+    <button class="snipcart-add-item"
+      data-item-id="trousers-M-navy"
+      data-item-name="Tailored Trousers"
+      data-item-price="200.00"
+      data-item-url="/product.html?id=trousers"
+      data-item-image="/assets/images/trousers_navy.png"
+      data-item-description="Size: M — Navy"
+      data-item-custom1-name="Size"
+      data-item-custom1-options="XS|S|M|L|XL"
+      data-item-custom1-value="M"
+      data-item-custom2-name="Colour"
+      data-item-custom2-options="Navy|Brown"
+      data-item-custom2-value="Navy">
+    </button>
   </div>
 
-  <!-- Cart System -->
-  <script src="cart.js?v=5"></script>
+  <!-- Snipcart Initialization -->
+  <script>
+    window.SnipcartSettings = {
+      publicApiKey: "NTZlMTFhODAtODhhYy00NTY3LWI5ZTAtNzg4YWZiMDE0OTE0NjM5MjI2NTI1NDM2Mzg1Njgy",
+      loadStrategy: "on-user-interaction",
+      currency: "aud",
+      addProductBehavior: "none",
+    };
+
+    (function(){var c,d;(d=(c=window.SnipcartSettings).version)!=null||(c.version="3.0");var s,S;(S=(s=window.SnipcartSettings).timeoutDuration)!=null||(s.timeoutDuration=2750);var l,p;(p=(l=window.SnipcartSettings).domain)!=null||(l.domain="cdn.snipcart.com");var w,m;(m=(w=window.SnipcartSettings).protocol)!=null||(w.protocol="https");var f=window.SnipcartSettings.version.includes("v3.0.0-ci")||window.SnipcartSettings.version!="3.0"&&window.SnipcartSettings.version.localeCompare("3.4.0",void 0,{numeric:!0,sensitivity:"base"})===-1,y=["focus","mouseover","touchmove","scroll","keydown"];window.LoadSnipcart=o;document.readyState==="loading"?document.addEventListener("DOMContentLoaded",r):r();function r(){window.SnipcartSettings.loadStrategy?window.SnipcartSettings.loadStrategy==="on-user-interaction"&&(y.forEach(function(t){return document.addEventListener(t,o)}),setTimeout(o,window.SnipcartSettings.timeoutDuration)):o()}var a=!1;function o(){if(a)return;a=!0;var t=document.getElementsByTagName("head")[0],n=document.querySelector("#snipcart"),i=document.querySelector('src[src^="'.concat(window.SnipcartSettings.protocol,"://").concat(window.SnipcartSettings.domain,'"][snipcart]')),e=document.createElement("script");e.setAttribute("src","".concat(window.SnipcartSettings.protocol,"://").concat(window.SnipcartSettings.domain,"/themes/v").concat(window.SnipcartSettings.version,"/default/snipcart.js"));e.setAttribute("async","true");e.setAttribute("defer","true");if(f){e.setAttribute("id","snipcart");e.setAttribute("data-api-key",window.SnipcartSettings.publicApiKey);n&&n.remove()}else{n||(n=document.createElement("div"),n.id="snipcart",n.setAttribute("data-api-key",window.SnipcartSettings.publicApiKey),document.body.appendChild(n));i&&i.remove()}t.appendChild(e);y.forEach(function(g){return document.removeEventListener(g,o)})}})();
+  </script>
+
+  <!-- Cart System (Snipcart wrapper) -->
+  <script src="cart.js?v=6"></script>
 
   <!-- Supabase SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>

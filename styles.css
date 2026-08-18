@@ -2860,3 +2860,235 @@ a.collection-card {
     padding: 10px 12px;
   }
 }
+
+
+/* ============================================
+   SNIPCART THEME OVERRIDES
+   Match Magne Montfort luxury aesthetic
+   ============================================ */
+
+/* ---------- Global Snipcart Overrides ---------- */
+.snipcart-modal__container,
+.snipcart-cart__content,
+.snipcart-layout {
+  font-family: var(--font-body) !important;
+}
+
+/* Snipcart overlay backdrop */
+.snipcart-modal__container {
+  background-color: rgba(10, 10, 10, 0.6) !important;
+  backdrop-filter: blur(4px);
+}
+
+/* Cart sidebar panel */
+.snipcart-cart-header,
+.snipcart-cart__content {
+  background-color: var(--color-white) !important;
+}
+
+.snipcart-cart-header__title {
+  font-family: var(--font-display) !important;
+  font-weight: 300 !important;
+  font-size: 1.4rem !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--color-noir) !important;
+}
+
+.snipcart-cart-header__close-button {
+  color: var(--color-noir) !important;
+}
+
+/* ---------- Cart Items ---------- */
+.snipcart-item-line {
+  border-bottom: 1px solid var(--color-ivory) !important;
+}
+
+.snipcart-item-line__title {
+  font-family: var(--font-display) !important;
+  font-weight: 400 !important;
+  font-size: 1rem !important;
+  letter-spacing: 0.05em !important;
+  color: var(--color-noir) !important;
+}
+
+.snipcart-item-line__variant {
+  font-family: var(--font-body) !important;
+  font-size: 0.75rem !important;
+  color: var(--color-ash) !important;
+  letter-spacing: 0.04em !important;
+}
+
+.snipcart-item-line__price {
+  font-family: var(--font-body) !important;
+  color: var(--color-noir) !important;
+  font-weight: 400 !important;
+}
+
+/* Quantity buttons */
+.snipcart-item-quantity__quantity {
+  font-family: var(--font-body) !important;
+  color: var(--color-noir) !important;
+}
+
+.snipcart-item-quantity__button {
+  color: var(--color-noir) !important;
+  border-color: var(--color-pearl) !important;
+}
+
+.snipcart-item-quantity__button:hover {
+  background-color: var(--color-ivory) !important;
+}
+
+/* Remove button */
+.snipcart-item-line__remove {
+  color: var(--color-ash) !important;
+}
+
+.snipcart-item-line__remove:hover {
+  color: var(--color-noir) !important;
+}
+
+/* ---------- Cart Summary / Footer ---------- */
+.snipcart-cart-summary {
+  border-top: 1px solid var(--color-ivory) !important;
+}
+
+.snipcart-cart-summary__content {
+  font-family: var(--font-body) !important;
+}
+
+.snipcart-cart-summary-fees__title,
+.snipcart-cart-summary-fees__amount {
+  font-family: var(--font-body) !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.06em !important;
+  color: var(--color-noir) !important;
+}
+
+/* ---------- Primary Buttons (Checkout, Continue, etc.) ---------- */
+.snipcart-button-primary,
+.snipcart-base-button--highlight {
+  background-color: var(--color-noir) !important;
+  color: var(--color-white) !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.68rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.25em !important;
+  text-transform: uppercase !important;
+  border-radius: 0 !important;
+  border: none !important;
+  padding: 14px 30px !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.snipcart-button-primary:hover,
+.snipcart-base-button--highlight:hover {
+  background-color: var(--color-charcoal) !important;
+}
+
+/* Secondary buttons */
+.snipcart-button-secondary,
+.snipcart-base-button--secondary {
+  background-color: transparent !important;
+  color: var(--color-noir) !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.68rem !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  border: 1px solid var(--color-pearl) !important;
+  border-radius: 0 !important;
+  transition: all 0.3s ease !important;
+}
+
+.snipcart-button-secondary:hover,
+.snipcart-base-button--secondary:hover {
+  border-color: var(--color-noir) !important;
+  background-color: var(--color-ivory) !important;
+}
+
+/* ---------- Checkout Form ---------- */
+.snipcart-checkout-step__title {
+  font-family: var(--font-display) !important;
+  font-weight: 300 !important;
+  font-size: 1.3rem !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: var(--color-noir) !important;
+}
+
+.snipcart-form__label {
+  font-family: var(--font-body) !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: var(--color-ash) !important;
+}
+
+.snipcart-form__input,
+.snipcart-form__select {
+  font-family: var(--font-body) !important;
+  border: 1px solid var(--color-pearl) !important;
+  border-radius: 0 !important;
+  color: var(--color-noir) !important;
+  font-size: 0.85rem !important;
+  transition: border-color 0.3s ease !important;
+}
+
+.snipcart-form__input:focus,
+.snipcart-form__select:focus {
+  border-color: var(--color-noir) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* ---------- Order Summary ---------- */
+.snipcart-order__title {
+  font-family: var(--font-display) !important;
+  font-weight: 300 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+.snipcart-order__box {
+  border: 1px solid var(--color-ivory) !important;
+  border-radius: 0 !important;
+}
+
+/* ---------- Empty Cart ---------- */
+.snipcart-empty-cart__title {
+  font-family: var(--font-display) !important;
+  font-weight: 300 !important;
+  font-size: 1.3rem !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: var(--color-noir) !important;
+}
+
+/* ---------- Discount / Promo ---------- */
+.snipcart-discount-box__button {
+  color: var(--color-gold) !important;
+  font-family: var(--font-body) !important;
+  font-size: 0.72rem !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+
+/* ---------- Footer / Powered By ---------- */
+.snipcart-layout__footer {
+  font-family: var(--font-body) !important;
+  color: var(--color-silver) !important;
+}
+
+/* ---------- Responsive Tweaks ---------- */
+@media (max-width: 768px) {
+  .snipcart-cart-header__title {
+    font-size: 1.1rem !important;
+  }
+
+  .snipcart-button-primary,
+  .snipcart-base-button--highlight {
+    padding: 12px 20px !important;
+    font-size: 0.65rem !important;
+  }
+}

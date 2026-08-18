@@ -158,17 +158,20 @@
   </div>
 
   <script>
-    // Clear the cart after successful purchase
+    // Clear the cart after successful purchase (Snipcart handles this automatically,
+    // but clear localStorage remnants from the old system if they exist)
     localStorage.removeItem('magne_montfort_cart');
+    localStorage.removeItem('magne_montfort_checkout_session');
 
-    // Show order reference from Stripe session ID
+    // Show order reference from URL if available
     const params = new URLSearchParams(window.location.search);
-    const sessionId = params.get('session_id');
+    const orderToken = params.get('token') || params.get('session_id');
     const refEl = document.getElementById('orderRef');
-    if (sessionId && refEl) {
-      refEl.textContent = `Order ref: ${sessionId.slice(-8).toUpperCase()}`;
+    if (orderToken && refEl) {
+      refEl.textContent = `Order ref: ${orderToken.slice(-8).toUpperCase()}`;
     }
   </script>
 </body>
 
 </html>
+

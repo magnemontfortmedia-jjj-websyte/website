@@ -1,13 +1,13 @@
 // ============================================
-// MAGNE MONTFORT — Cart System
-// localStorage-powered shopping cart
+// MAGNE MONTFORT — Snipcart Integration Layer
+// Replaces the old custom cart system with Snipcart SDK
 // ============================================
 
 const MagneCart = (() => {
-  const STORAGE_KEY = 'magne_montfort_cart';
-  const STORAGE_IGNORED_KEY = 'magne_montfort_cart_ignored';
 
   // ---------- Product Catalog ----------
+  // Kept for product page rendering (sizes, colors, images, descriptions).
+  // Prices are validated server-side by Snipcart's crawler.
   const PRODUCTS = {
     bomber: {
       id: 'bomber',
@@ -75,102 +75,115 @@ const MagneCart = (() => {
     }
   };
 
-  // ---------- Cart Data ----------
-  function getCart() {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-    } catch {
-      return [];
-    }
-  }
+  // ---------- Snipcart Cart Helpers ----------
 
-  function saveCart(cart) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
-    updateBadge();
-    renderDrawer();
-  }
-
-  function getIgnoredProducts() {
-    try {
-      return JSON.parse(localStorage.getItem(STORAGE_IGNORED_KEY)) || [];
-    } catch {
-      return [];
-    }
-  }
-
-  function markAsIgnored(productId) {
-    const ignored = getIgnoredProducts();
-    if (!ignored.includes(productId)) {
-      ignored.push(productId);
-      localStorage.setItem(STORAGE_IGNORED_KEY, JSON.stringify(ignored));
-    }
-  }
-
-  function unmarkAsIgnored(productId) {
-    const ignored = getIgnoredProducts();
-    const newIgnored = ignored.filter(id => id !== productId);
-    localStorage.setItem(STORAGE_IGNORED_KEY, JSON.stringify(newIgnored));
-  }
-
+  /**
+   * Add an item to the Snipcart cart via the SDK API.
+   * Falls back to programmatic button click if SDK isn't ready.
+   */
   function addToCart(productId, size, qty = 1, color = null) {
-    const cart = getCart();
-    const existing = cart.find(
-      item => item.productId === productId && item.size === size && item.color === color
-    );
+    const product = PRODUCTS[productId];
+    if (!product) return;
 
-    if (existing) {
-      existing.qty += qty;
-    } else {
-      cart.push({ productId, size, qty, color });
+    // Determine image — use color variant image if applicable
+    let image = product.images[0];
+    if (color && product.colors) {
+      const colorVariant = product.colors.find(c => c.id === color);
+      if (colorVariant) image = colorVariant.image;
     }
 
-    unmarkAsIgnored(productId); // Remove from ignore list if they add it again
-    saveCart(cart);
-    openDrawer();
-  }
+    // Build a unique item ID that includes size + color so variants stack separately
+    const uniqueId = color
+      ? `${productId}-${size}-${color}`
+      : `${productId}-${size}`;
 
-  function removeFromCart(index) {
-    const cart = getCart();
-    const removedItem = cart[index];
-    if (removedItem) {
-      markAsIgnored(removedItem.productId);
+    const colorLabel = color
+      ? ` — ${color.charAt(0).toUpperCase() + color.slice(1)}`
+      : '';
+
+    // Build custom fields array
+    const customFields = [
+      { name: 'Size', options: product.sizes.join('|'), value: size }
+    ];
+
+    if (color && product.colors) {
+      const colorOptions = product.colors.map(c => c.name).join('|');
+      const colorName = color.charAt(0).toUpperCase() + color.slice(1);
+      customFields.push({ name: 'Colour', options: colorOptions, value: colorName });
     }
-    cart.splice(index, 1);
-    saveCart(cart);
-  }
 
-  function updateQuantity(index, newQty) {
-    const cart = getCart();
-    if (newQty <= 0) {
-      const removedItem = cart[index];
-      if (removedItem) {
-        markAsIgnored(removedItem.productId);
-      }
-      cart.splice(index, 1);
-    } else {
-      cart[index].qty = newQty;
+    // Use Snipcart's JS SDK to add the item
+    if (window.Snipcart) {
+      window.Snipcart.api.cart.items.add({
+        id: uniqueId,
+        name: product.name,
+        price: product.price,
+        url: `${window.location.origin}/product.html?id=${productId}`,
+        description: `Size: ${size}${colorLabel}`,
+        image: image.startsWith('http') ? image : `${window.location.origin}/${image}`,
+        quantity: qty,
+        customFields: customFields
+      }).catch(err => {
+        console.error('Snipcart add to cart error:', err);
+      });
     }
-    saveCart(cart);
   }
 
+  /**
+   * Open the Snipcart cart drawer
+   */
+  function openDrawer() {
+    if (window.Snipcart) {
+      window.Snipcart.api.theme.cart.open();
+    }
+  }
+
+  /**
+   * Close the Snipcart cart drawer
+   */
+  function closeDrawer() {
+    if (window.Snipcart) {
+      window.Snipcart.api.theme.cart.close();
+    }
+  }
+
+  /**
+   * Get cart item count from Snipcart
+   */
   function getCartCount() {
-    return getCart().reduce((sum, item) => sum + item.qty, 0);
+    if (window.Snipcart) {
+      return window.Snipcart.store.getState().cart.items.count || 0;
+    }
+    return 0;
   }
 
+  /**
+   * Get cart total from Snipcart
+   */
   function getCartTotal() {
-    return getCart().reduce((sum, item) => {
-      const product = PRODUCTS[item.productId];
-      return sum + (product ? product.price * item.qty : 0);
-    }, 0);
+    if (window.Snipcart) {
+      return window.Snipcart.store.getState().cart.total || 0;
+    }
+    return 0;
   }
 
+  /**
+   * Clear all items from cart
+   */
   function clearCart() {
-    localStorage.removeItem(STORAGE_KEY);
-    updateBadge();
-    renderDrawer();
+    if (window.Snipcart) {
+      const items = window.Snipcart.store.getState().cart.items.items;
+      if (items) {
+        items.forEach(item => {
+          window.Snipcart.api.cart.items.remove(item.uniqueId);
+        });
+      }
+    }
   }
 
-  // ---------- UI: Badge ----------
+  /**
+   * Update the custom cart badge (nav bag icon) from Snipcart state
+   */
   function updateBadge() {
     const count = getCartCount();
     const badges = document.querySelectorAll('.cart-badge');
@@ -185,267 +198,9 @@ const MagneCart = (() => {
     });
   }
 
-  // ---------- UI: Drawer ----------
-  function openDrawer() {
-    const drawer = document.getElementById('cartDrawer');
-    const overlay = document.getElementById('cartOverlay');
-    if (drawer) {
-      drawer.classList.add('cart-drawer--open');
-      overlay.classList.add('cart-overlay--visible');
-      document.body.style.overflow = 'hidden';
-    }
-  }
-
-  function closeDrawer() {
-    const drawer = document.getElementById('cartDrawer');
-    const overlay = document.getElementById('cartOverlay');
-    if (drawer) {
-      drawer.classList.remove('cart-drawer--open');
-      overlay.classList.remove('cart-overlay--visible');
-      document.body.style.overflow = '';
-    }
-  }
-
-  function renderDrawer() {
-    const container = document.getElementById('cartItems');
-    const subtotalEl = document.getElementById('cartSubtotal');
-    const emptyEl = document.getElementById('cartEmpty');
-    const footerEl = document.getElementById('cartFooter');
-
-    if (!container) return;
-
-    const cart = getCart();
-
-    if (cart.length === 0) {
-      container.innerHTML = '';
-      if (emptyEl) emptyEl.style.display = 'flex';
-      if (footerEl) footerEl.style.display = 'none';
-      return;
-    }
-
-    if (emptyEl) emptyEl.style.display = 'none';
-    if (footerEl) footerEl.style.display = 'block';
-
-    container.innerHTML = cart.map((item, index) => {
-      const product = PRODUCTS[item.productId];
-      if (!product) return '';
-
-      let image = product.images[0];
-      // If this product has color variants, use the correct color image
-      if (item.color && product.colors) {
-        const colorVariant = product.colors.find(c => c.id === item.color);
-        if (colorVariant) image = colorVariant.image;
-      }
-
-      const colorLabel = item.color ? ` — ${item.color.charAt(0).toUpperCase() + item.color.slice(1)}` : '';
-
-      return `
-        <div class="cart-item">
-          <div class="cart-item__image">
-            <img src="${image}" alt="${product.name}">
-          </div>
-          <div class="cart-item__info">
-            <p class="cart-item__name">${product.name}</p>
-            <p class="cart-item__meta">Size: ${item.size}${colorLabel}</p>
-            <p class="cart-item__price">$${product.price}</p>
-            <div class="cart-item__qty">
-              <button class="cart-item__qty-btn" onclick="MagneCart.updateQuantity(${index}, ${item.qty - 1})">−</button>
-              <span class="cart-item__qty-value">${item.qty}</span>
-              <button class="cart-item__qty-btn" onclick="MagneCart.updateQuantity(${index}, ${item.qty + 1})">+</button>
-            </div>
-          </div>
-          <button class="cart-item__remove" onclick="MagneCart.removeFromCart(${index})" aria-label="Remove item">
-            <svg viewBox="0 0 24 24" width="16" height="16">
-              <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-              <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </button>
-        </div>
-      `;
-    }).join('');
-
-    if (subtotalEl) {
-      subtotalEl.textContent = `$${getCartTotal().toLocaleString()}`;
-    }
-
-    renderUpsell();
-  }
-
-  function renderUpsell() {
-    const upsellContainer = document.getElementById('cartUpsell');
-    if (!upsellContainer) return;
-
-    const cart = getCart();
-    const cartProductIds = new Set(cart.map(item => item.productId));
-    const ignoredProductIds = new Set(getIgnoredProducts());
-
-    // Find products not in cart and not ignored
-    const availableUpsells = Object.values(PRODUCTS).filter(p => !cartProductIds.has(p.id) && !ignoredProductIds.has(p.id));
-
-    if (availableUpsells.length === 0 || cart.length === 0) {
-      upsellContainer.style.display = 'none';
-      return;
-    }
-
-    upsellContainer.style.display = 'block';
-
-    const upsellItemsHtml = availableUpsells.map(upsellProduct => {
-      const image = upsellProduct.images[0];
-      const defaultSize = upsellProduct.sizes ? upsellProduct.sizes[2] || 'M' : 'M';
-      const defaultColor = upsellProduct.colors ? upsellProduct.colors[0].id : '';
-      
-      const sizeOptions = (upsellProduct.sizes || ['XS', 'S', 'M', 'L', 'XL'])
-        .map(size => `<option value="${size}" ${size === defaultSize ? 'selected' : ''}>${size}</option>`)
-        .join('');
-
-      let colorSelectorHtml = '';
-      if (upsellProduct.colors) {
-        const colorOptions = upsellProduct.colors.map(color => 
-          `<option value="${color.id}">${color.name}</option>`
-        ).join('');
-        
-        colorSelectorHtml = `
-          <select class="cart-upsell__size" id="upsell-color-${upsellProduct.id}" aria-label="Select color" style="margin-left:4px;">
-            ${colorOptions}
-          </select>
-        `;
-      }
-
-      return `
-        <div class="cart-upsell__item">
-          <img src="${image}" alt="${upsellProduct.name}" class="cart-upsell__img">
-          <div class="cart-upsell__info">
-            <a href="product.html?id=${upsellProduct.id}" class="cart-upsell__name">${upsellProduct.name}</a>
-            <p class="cart-upsell__price">$${upsellProduct.price}</p>
-            <div class="cart-upsell__actions">
-              <select class="cart-upsell__size" id="upsell-size-${upsellProduct.id}" aria-label="Select size">
-                ${sizeOptions}
-              </select>
-              ${colorSelectorHtml}
-              <button class="cart-upsell__add" onclick="
-                const sizeEl = document.getElementById('upsell-size-${upsellProduct.id}');
-                const size = sizeEl ? sizeEl.value : '${defaultSize}';
-                const colorEl = document.getElementById('upsell-color-${upsellProduct.id}');
-                const color = colorEl ? colorEl.value : '${defaultColor}';
-                MagneCart.addToCart('${upsellProduct.id}', size, 1, color ? color : null);
-              " aria-label="Add ${upsellProduct.name}">
-                Add
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-    }).join('');
-
-    upsellContainer.innerHTML = `
-      <div class="cart-upsell__header">Complete the look</div>
-      <div class="cart-upsell__list">
-        ${upsellItemsHtml}
-      </div>
-    `;
-  }
-
-  // ---------- Stripe Checkout ----------
-  const SUPABASE_URL = 'https://qtnhluqbwfoejukhgkcq.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0bmhsdXFid2ZvZWp1a2hna2NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0MjA1NzEsImV4cCI6MjEwMDk5NjU3MX0.QjprXidz7rXnUfopuV2ujSzOBDQ4ZHj0s8QnJDxlMwE';
-
-  const CHECKOUT_SESSION_KEY = 'magne_montfort_checkout_session';
-
-  async function checkout() {
-    const cart = getCart();
-    if (cart.length === 0) return;
-
-    const checkoutBtn = document.getElementById('checkoutBtn');
-    if (checkoutBtn) {
-      checkoutBtn.textContent = 'Processing...';
-      checkoutBtn.disabled = true;
-    }
-
-    try {
-      // Determine the base URL for redirect URLs
-      const baseUrl = window.location.origin;
-      const cartHash = JSON.stringify(cart);
-      
-      // Check for existing session in localStorage
-      const existingSessionStr = localStorage.getItem(CHECKOUT_SESSION_KEY);
-      let previousSessionId = null;
-      
-      if (existingSessionStr) {
-        try {
-          const existing = JSON.parse(existingSessionStr);
-          // If cart hasn't changed and session hasn't expired (give a 5 min buffer to the 30 min max)
-          if (existing.cartHash === cartHash && Date.now() < existing.expiresAt - 5 * 60000) {
-            // Smart Re-use: Cart is identical, send them back to the exact same Stripe session
-            window.location.href = existing.url;
-            return;
-          }
-          // Cart changed, we need to explicitly expire the old session to free its stock
-          previousSessionId = existing.sessionId;
-        } catch (e) {
-          // Ignore parse errors
-        }
-      }
-
-      const response = await fetch(`${SUPABASE_URL}/functions/v1/create-checkout`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-        },
-        body: JSON.stringify({
-          items: cart,
-          success_url: `${baseUrl}/order-confirmation.html?session_id={CHECKOUT_SESSION_ID}`,
-          cancel_url: `${baseUrl}/index.html`,
-          previous_session_id: previousSessionId,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.url) {
-        // Save the new session to prevent cart hoarding on refresh
-        localStorage.setItem(CHECKOUT_SESSION_KEY, JSON.stringify({
-          sessionId: data.sessionId,
-          url: data.url,
-          cartHash: cartHash,
-          expiresAt: Date.now() + 30 * 60000 // 30 minutes
-        }));
-        
-        // Redirect to Stripe Checkout
-        window.location.href = data.url;
-      } else if (data.out_of_stock) {
-        // Stock reservation failed — show friendly message
-        alert(data.error);
-        if (checkoutBtn) {
-          checkoutBtn.textContent = 'Checkout';
-          checkoutBtn.disabled = false;
-        }
-      } else {
-        console.error('Checkout error:', data);
-        alert('Something went wrong. Please try again.');
-        if (checkoutBtn) {
-          checkoutBtn.textContent = 'Checkout';
-          checkoutBtn.disabled = false;
-        }
-      }
-    } catch (err) {
-      console.error('Checkout error:', err);
-      alert('Something went wrong. Please try again.');
-      if (checkoutBtn) {
-        checkoutBtn.textContent = 'Checkout';
-        checkoutBtn.disabled = false;
-      }
-    }
-  }
-
   // ---------- Init ----------
   function init() {
-    // Reset ignored upsell products each page load (session-scoped)
-    localStorage.removeItem(STORAGE_IGNORED_KEY);
-    updateBadge();
-    renderDrawer();
-
-    // Wire up bag icon to open drawer
+    // Wire up bag icon to open Snipcart cart
     const bagBtn = document.getElementById('nav-bag');
     if (bagBtn) {
       bagBtn.addEventListener('click', (e) => {
@@ -454,23 +209,15 @@ const MagneCart = (() => {
       });
     }
 
-    // Wire up close button
-    const closeBtn = document.getElementById('cartClose');
-    if (closeBtn) {
-      closeBtn.addEventListener('click', closeDrawer);
-    }
+    // Listen for Snipcart ready event to sync badge
+    document.addEventListener('snipcart.ready', () => {
+      updateBadge();
 
-    // Wire up overlay click to close
-    const overlay = document.getElementById('cartOverlay');
-    if (overlay) {
-      overlay.addEventListener('click', closeDrawer);
-    }
-
-    // Wire up checkout button
-    const checkoutBtn = document.getElementById('checkoutBtn');
-    if (checkoutBtn) {
-      checkoutBtn.addEventListener('click', checkout);
-    }
+      // Subscribe to store changes for real-time badge updates
+      window.Snipcart.store.subscribe(() => {
+        updateBadge();
+      });
+    });
   }
 
   // Auto-init when DOM is ready
@@ -480,32 +227,15 @@ const MagneCart = (() => {
     init();
   }
 
-  // Fix: Reset checkout button when navigating back via browser (bfcache)
-  window.addEventListener('pageshow', (event) => {
-    const checkoutBtn = document.getElementById('checkoutBtn');
-    if (checkoutBtn && (checkoutBtn.disabled || checkoutBtn.textContent.trim() === 'Processing...')) {
-      checkoutBtn.textContent = 'Checkout';
-      checkoutBtn.disabled = false;
-    }
-    // Clear stale session so a fresh one is created on next checkout
-    localStorage.removeItem(CHECKOUT_SESSION_KEY);
-  });
-
   // Public API
   return {
     PRODUCTS,
-    getCart,
     addToCart,
-    removeFromCart,
-    updateQuantity,
+    openDrawer,
+    closeDrawer,
     getCartCount,
     getCartTotal,
     clearCart,
-    openDrawer,
-    closeDrawer,
-    updateBadge,
-    renderDrawer,
-    checkout
+    updateBadge
   };
 })();
-

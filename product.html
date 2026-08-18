@@ -15,7 +15,11 @@
     href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@300;400;500&display=swap"
     rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=5">
+  <!-- Snipcart -->
+  <link rel="preconnect" href="https://cdn.snipcart.com">
+  <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.7.1/default/snipcart.css" />
+
+  <link rel="stylesheet" href="styles.css?v=6">
 </head>
 
 <body>
@@ -177,53 +181,26 @@
     </div>
   </footer>
 
-  <!-- Cart Overlay -->
-  <div class="cart-overlay" id="cartOverlay"></div>
+  <!-- Hidden Snipcart product definition for crawler validation -->
+  <div hidden id="snipcartCrawlerProducts"></div>
 
-  <!-- Cart Drawer -->
-  <div class="cart-drawer" id="cartDrawer">
-    <div class="cart-drawer__header">
-      <h3 class="cart-drawer__title">Your Bag</h3>
-      <button class="cart-drawer__close" id="cartClose" aria-label="Close cart">
-        <svg viewBox="0 0 24 24" width="20" height="20">
-          <line x1="18" y1="6" x2="6" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="6" y1="6" x2="18" y2="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-      </button>
-    </div>
+  <!-- Snipcart Initialization -->
+  <script>
+    window.SnipcartSettings = {
+      publicApiKey: "NTZlMTFhODAtODhhYy00NTY3LWI5ZTAtNzg4YWZiMDE0OTE0NjM5MjI2NTI1NDM2Mzg1Njgy",
+      loadStrategy: "on-user-interaction",
+      currency: "aud",
+      addProductBehavior: "none",
+    };
 
-    <div class="cart-drawer__body">
-      <div class="cart-empty" id="cartEmpty">
-        <svg viewBox="0 0 24 24" width="48" height="48" style="stroke: var(--color-pearl); fill: none; stroke-width: 1;">
-          <path d="M6 6h12l1 14H5L6 6z" />
-          <path d="M9 6V4a3 3 0 0 1 6 0v2" />
-        </svg>
-        <p class="cart-empty__text">Your bag is empty</p>
-        <button class="cart-empty__cta" onclick="MagneCart.closeDrawer()">Continue Shopping</button>
-      </div>
+    (function(){var c,d;(d=(c=window.SnipcartSettings).version)!=null||(c.version="3.0");var s,S;(S=(s=window.SnipcartSettings).timeoutDuration)!=null||(s.timeoutDuration=2750);var l,p;(p=(l=window.SnipcartSettings).domain)!=null||(l.domain="cdn.snipcart.com");var w,m;(m=(w=window.SnipcartSettings).protocol)!=null||(w.protocol="https");var f=window.SnipcartSettings.version.includes("v3.0.0-ci")||window.SnipcartSettings.version!="3.0"&&window.SnipcartSettings.version.localeCompare("3.4.0",void 0,{numeric:!0,sensitivity:"base"})===-1,y=["focus","mouseover","touchmove","scroll","keydown"];window.LoadSnipcart=o;document.readyState==="loading"?document.addEventListener("DOMContentLoaded",r):r();function r(){window.SnipcartSettings.loadStrategy?window.SnipcartSettings.loadStrategy==="on-user-interaction"&&(y.forEach(function(t){return document.addEventListener(t,o)}),setTimeout(o,window.SnipcartSettings.timeoutDuration)):o()}var a=!1;function o(){if(a)return;a=!0;var t=document.getElementsByTagName("head")[0],n=document.querySelector("#snipcart"),i=document.querySelector('src[src^="'.concat(window.SnipcartSettings.protocol,"://").concat(window.SnipcartSettings.domain,'"][snipcart]')),e=document.createElement("script");e.setAttribute("src","".concat(window.SnipcartSettings.protocol,"://").concat(window.SnipcartSettings.domain,"/themes/v").concat(window.SnipcartSettings.version,"/default/snipcart.js"));e.setAttribute("async","true");e.setAttribute("defer","true");if(f){e.setAttribute("id","snipcart");e.setAttribute("data-api-key",window.SnipcartSettings.publicApiKey);n&&n.remove()}else{n||(n=document.createElement("div"),n.id="snipcart",n.setAttribute("data-api-key",window.SnipcartSettings.publicApiKey),document.body.appendChild(n));i&&i.remove()}t.appendChild(e);y.forEach(function(g){return document.removeEventListener(g,o)})}})();
+  </script>
 
-      <div id="cartItems"></div>
-    </div>
-
-    <div class="cart-drawer__footer" id="cartFooter" style="display:none;">
-      <div id="cartUpsell" class="cart-upsell"></div>
-      <div class="cart-drawer__subtotal">
-        <span>Subtotal</span>
-        <span id="cartSubtotal">$0</span>
-      </div>
-      <p class="cart-drawer__shipping">Shipping calculated at checkout</p>
-      <button class="cart-drawer__checkout" id="checkoutBtn">Checkout</button>
-    </div>
-  </div>
-
-  <!-- Cart System -->
-  <script src="cart.js?v=5"></script>
+  <!-- Cart System (Snipcart wrapper) -->
+  <script src="cart.js?v=6"></script>
 
   <!-- Product Page Logic -->
   <script>
-    const SUPABASE_URL = 'https://qtnhluqbwfoejukhgkcq.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0bmhsdXFid2ZvZWp1a2hna2NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODU0MjA1NzEsImV4cCI6MjEwMDk5NjU3MX0.QjprXidz7rXnUfopuV2ujSzOBDQ4ZHj0s8QnJDxlMwE';
-
     document.addEventListener('DOMContentLoaded', async () => {
       const params = new URLSearchParams(window.location.search);
       const productId = params.get('id');
@@ -253,41 +230,45 @@
         detailsList.innerHTML = product.details.map(d => `<li>${d}</li>`).join('');
       }
 
-      // ---------- Fetch Stock from Supabase ----------
-      let stockData = {};
+      // ---------- Generate hidden Snipcart product buttons for crawler ----------
+      const crawlerContainer = document.getElementById('snipcartCrawlerProducts');
+      if (crawlerContainer) {
+        const sizes = product.sizes || ['XS', 'S', 'M', 'L', 'XL'];
+        const colors = product.colors || [null];
 
-      async function fetchStock(color) {
-        try {
-          let url = `${SUPABASE_URL}/rest/v1/inventory?product_id=eq.${productId}&select=size,quantity`;
-          if (color) {
-            url += `&color=eq.${color}`;
-          } else {
-            url += `&color=is.null`;
-          }
+        colors.forEach(color => {
+          sizes.forEach(size => {
+            const uniqueId = color
+              ? `${productId}-${size}-${color.id}`
+              : `${productId}-${size}`;
+            const colorLabel = color ? ` — ${color.name}` : '';
+            const image = color ? color.image : product.images[0];
 
-          const res = await fetch(url, {
-            headers: {
-              apikey: SUPABASE_ANON_KEY,
-              Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-            },
+            let btn = document.createElement('button');
+            btn.className = 'snipcart-add-item';
+            btn.setAttribute('data-item-id', uniqueId);
+            btn.setAttribute('data-item-name', product.name);
+            btn.setAttribute('data-item-price', product.price.toFixed(2));
+            btn.setAttribute('data-item-url', `/product.html?id=${productId}`);
+            btn.setAttribute('data-item-image', image.startsWith('http') ? image : `/${image}`);
+            btn.setAttribute('data-item-description', `Size: ${size}${colorLabel}`);
+            btn.setAttribute('data-item-custom1-name', 'Size');
+            btn.setAttribute('data-item-custom1-options', sizes.join('|'));
+            btn.setAttribute('data-item-custom1-value', size);
+
+            if (color) {
+              const colorOptions = product.colors.map(c => c.name).join('|');
+              btn.setAttribute('data-item-custom2-name', 'Colour');
+              btn.setAttribute('data-item-custom2-options', colorOptions);
+              btn.setAttribute('data-item-custom2-value', color.name);
+            }
+
+            crawlerContainer.appendChild(btn);
           });
-
-          const data = await res.json();
-          stockData = {};
-          data.forEach(row => {
-            stockData[row.size] = row.quantity;
-          });
-
-          renderSizes();
-        } catch (err) {
-          console.error('Failed to fetch stock:', err);
-          // Fallback: show all sizes as available
-          product.sizes.forEach(s => { stockData[s] = 99; });
-          renderSizes();
-        }
+        });
       }
 
-      // ---------- Size Selector with Stock ----------
+      // ---------- Size Selector ----------
       let selectedSize = null;
       const sizeGrid = document.getElementById('sizeGrid');
       const addBtn = document.getElementById('addToCartBtn');
@@ -297,33 +278,16 @@
         addBtn.classList.remove('product-actions__add--ready');
 
         sizeGrid.innerHTML = product.sizes.map(size => {
-          const qty = stockData[size] ?? 0;
-          const soldOut = qty <= 0;
-          const lowStock = qty > 0 && qty <= 3;
-
-          let label = size;
-          let extraClass = '';
-
-          if (soldOut) {
-            extraClass = 'size-btn--sold-out';
-          } else if (lowStock) {
-            extraClass = 'size-btn--low-stock';
-          }
-
           return `
-            <button class="size-btn ${extraClass}" 
-                    data-size="${size}" 
-                    data-qty="${qty}"
-                    ${soldOut ? 'disabled' : ''}>
+            <button class="size-btn" 
+                    data-size="${size}">
               <span class="size-btn__label">${size}</span>
-              ${lowStock ? `<span class="size-btn__stock">Only ${qty} left</span>` : ''}
-              ${soldOut ? `<span class="size-btn__stock">Sold Out</span>` : ''}
             </button>
           `;
         }).join('');
 
-        // Re-attach click handlers
-        sizeGrid.querySelectorAll('.size-btn:not([disabled])').forEach(btn => {
+        // Attach click handlers
+        sizeGrid.querySelectorAll('.size-btn').forEach(btn => {
           btn.addEventListener('click', () => {
             sizeGrid.querySelectorAll('.size-btn').forEach(b => b.classList.remove('size-btn--active'));
             btn.classList.add('size-btn--active');
@@ -332,6 +296,8 @@
           });
         });
       }
+
+      renderSizes();
 
       // ---------- Color Variants (Trousers) ----------
       let selectedColor = null;
@@ -362,29 +328,15 @@
             selectedColor = swatch.dataset.color;
             colorNameEl.textContent = swatch.dataset.name;
             document.getElementById('productMainImage').src = swatch.dataset.image;
-
-            // Re-fetch stock for the new color
-            fetchStock(selectedColor);
           });
         });
       }
 
-      // Initial stock fetch
-      await fetchStock(selectedColor);
-
-      // ---------- Add to Cart ----------
+      // ---------- Add to Cart (via Snipcart) ----------
       addBtn.addEventListener('click', () => {
         if (!selectedSize) {
           sizeGrid.classList.add('product-sizes__grid--shake');
           setTimeout(() => sizeGrid.classList.remove('product-sizes__grid--shake'), 600);
-          return;
-        }
-
-        // Double-check stock
-        const qty = stockData[selectedSize] ?? 0;
-        if (qty <= 0) {
-          alert('Sorry, this size is no longer available.');
-          fetchStock(selectedColor);
           return;
         }
 
