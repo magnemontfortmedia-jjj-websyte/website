@@ -253,7 +253,7 @@
             
             const fullImagePath = image.startsWith('http') 
               ? image 
-              : `${window.location.origin}${window.location.pathname.replace(/\\/[^/]*$/, '')}/${image}`;
+              : `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'))}/${image}`;
             btn.setAttribute('data-item-image', fullImagePath);
             
             btn.setAttribute('data-item-description', `Size: ${size}${colorLabel}`);
