@@ -249,8 +249,13 @@
             btn.setAttribute('data-item-id', uniqueId);
             btn.setAttribute('data-item-name', product.name);
             btn.setAttribute('data-item-price', product.price.toFixed(2));
-            btn.setAttribute('data-item-url', `/product.html?id=${productId}`);
-            btn.setAttribute('data-item-image', image.startsWith('http') ? image : `/${image}`);
+            btn.setAttribute('data-item-url', window.location.href.split('#')[0]);
+            
+            const fullImagePath = image.startsWith('http') 
+              ? image 
+              : `${window.location.origin}${window.location.pathname.replace(/\\/[^/]*$/, '')}/${image}`;
+            btn.setAttribute('data-item-image', fullImagePath);
+            
             btn.setAttribute('data-item-description', `Size: ${size}${colorLabel}`);
             btn.setAttribute('data-item-custom1-name', 'Size');
             btn.setAttribute('data-item-custom1-options', sizes.join('|'));

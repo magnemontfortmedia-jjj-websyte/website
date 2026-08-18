@@ -118,9 +118,9 @@ const MagneCart = (() => {
         id: uniqueId,
         name: product.name,
         price: product.price,
-        url: `${window.location.origin}/product.html?id=${productId}`,
+        url: window.location.href.split('#')[0],
         description: `Size: ${size}${colorLabel}`,
-        image: image.startsWith('http') ? image : `${window.location.origin}/${image}`,
+        image: image.startsWith('http') ? image : `${window.location.origin}${window.location.pathname.replace(/\\/[^/]*$/, '')}/${image}`,
         quantity: qty,
         customFields: customFields
       }).catch(err => {
