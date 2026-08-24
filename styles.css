@@ -3683,8 +3683,24 @@ a.collection-card {
 }
 
 /* ========================================================
-   CHECKOUT STEPS & FORMS
+   CHECKOUT STEPS & FORMS (Instant in-place replacement)
    ======================================================== */
+.snipcart-checkout,
+.snipcart-checkout__content,
+.snipcart-checkout-step,
+.snipcart-checkout-step__cols,
+.snipcart-checkout-step__col,
+.snipcart-checkout-step__col--large,
+.snipcart-form,
+.snipcart-payment-card-form,
+.snipcart-billing-completed__slide-transition,
+.snipcart-billing-completed__slide-transition--enter-active,
+.snipcart-billing-completed__slide-transition--enter-leave {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
 .snipcart-checkout__content,
 .snipcart-checkout-step,
 .snipcart-form {
