@@ -7,7 +7,7 @@ const MagneCart = (() => {
 
   // ---------- Product Catalog ----------
   // Kept for product page rendering (sizes, colors, images, descriptions).
-  // Prices are validated server-side by Snipcart's crawler.
+  // Prices are validated server-side by Snipcart's crawler via /products.json.
   const PRODUCTS = {
     bomber: {
       id: 'bomber',
@@ -75,7 +75,31 @@ const MagneCart = (() => {
     }
   };
 
+  // ---------- Complementary Products (Complete the Look) ----------
+  const COMPLEMENTARY = {
+    bomber:     ['cable_knit', 'trousers'],
+    cable_knit: ['bomber', 'trousers'],
+    trousers:   ['bomber', 'cable_knit']
+  };
+
+  /**
+   * Get complementary products for "Complete the Look" section
+   */
+  function getComplementary(productId) {
+    const ids = COMPLEMENTARY[productId] || [];
+    return ids.map(id => PRODUCTS[id]).filter(Boolean);
+  }
+
   // ---------- Snipcart Cart Helpers ----------
+
+  /**
+   * Build the validation URL for Snipcart's JSON crawler.
+   * Points to /products.json which contains all product IDs + prices.
+   */
+  function getValidationUrl() {
+    // Use the origin + /products.json so Snipcart's crawler can fetch it
+    return `${window.location.origin}/products.json`;
+  }
 
   /**
    * Add an item to the Snipcart cart via the SDK API.
@@ -112,15 +136,20 @@ const MagneCart = (() => {
       customFields.push({ name: 'Colour', options: colorOptions, value: colorName });
     }
 
+    // Build full image URL
+    const fullImage = image.startsWith('http')
+      ? image
+      : `${window.location.origin}/${image}`;
+
     // Use Snipcart's JS SDK to add the item
     if (window.Snipcart) {
       window.Snipcart.api.cart.items.add({
         id: uniqueId,
         name: product.name,
         price: product.price,
-        url: window.location.href.split('#')[0],
+        url: getValidationUrl(),
         description: `Size: ${size}${colorLabel}`,
-        image: image.startsWith('http') ? image : `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'))}/${image}`,
+        image: fullImage,
         quantity: qty,
         customFields: customFields
       }).catch(err => {
@@ -236,6 +265,8 @@ const MagneCart = (() => {
     getCartCount,
     getCartTotal,
     clearCart,
-    updateBadge
+    updateBadge,
+    getComplementary,
+    getValidationUrl
   };
 })();

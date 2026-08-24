@@ -2865,6 +2865,7 @@ a.collection-card {
 /* ============================================
    SNIPCART THEME OVERRIDES
    Match Magne Montfort luxury aesthetic
+   Side drawer (right column) layout
    ============================================ */
 
 /* ---------- Global Snipcart Overrides ---------- */
@@ -2874,10 +2875,40 @@ a.collection-card {
   font-family: var(--font-body) !important;
 }
 
-/* Snipcart overlay backdrop */
+/* Snipcart overlay backdrop — semi-transparent, lets site show through */
 .snipcart-modal__container {
-  background-color: rgba(10, 10, 10, 0.6) !important;
-  backdrop-filter: blur(4px);
+  background-color: rgba(10, 10, 10, 0.35) !important;
+  backdrop-filter: blur(2px) !important;
+}
+
+/* ---------- Side Drawer Layout ---------- */
+/* Force the cart to be a right-side column */
+.snipcart-layout {
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+.snipcart-layout__content {
+  max-width: 460px !important;
+  width: 100% !important;
+  min-height: 100vh !important;
+  height: 100% !important;
+  margin-left: auto !important;
+  margin-right: 0 !important;
+  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.15) !important;
+  animation: snipcart-slide-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  overflow-y: auto !important;
+}
+
+@keyframes snipcart-slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0.8;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 /* Cart sidebar panel */
@@ -2897,11 +2928,17 @@ a.collection-card {
 
 .snipcart-cart-header__close-button {
   color: var(--color-noir) !important;
+  transition: opacity 0.2s ease !important;
+}
+
+.snipcart-cart-header__close-button:hover {
+  opacity: 0.6 !important;
 }
 
 /* ---------- Cart Items ---------- */
 .snipcart-item-line {
   border-bottom: 1px solid var(--color-ivory) !important;
+  transition: opacity 0.15s ease !important;
 }
 
 .snipcart-item-line__title {
@@ -2925,24 +2962,46 @@ a.collection-card {
   font-weight: 400 !important;
 }
 
-/* Quantity buttons */
+/* ---------- Quantity Buttons (Snappy feedback) ---------- */
 .snipcart-item-quantity__quantity {
   font-family: var(--font-body) !important;
   color: var(--color-noir) !important;
+  transition: transform 0.1s ease !important;
 }
 
 .snipcart-item-quantity__button {
   color: var(--color-noir) !important;
   border-color: var(--color-pearl) !important;
+  transition: all 0.1s ease !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
+/* Immediate visual feedback on press */
 .snipcart-item-quantity__button:hover {
   background-color: var(--color-ivory) !important;
+  border-color: var(--color-ash) !important;
+}
+
+.snipcart-item-quantity__button:active {
+  transform: scale(0.9) !important;
+  background-color: var(--color-pearl) !important;
+  border-color: var(--color-noir) !important;
+}
+
+/* Prevent the loading/disabled state from looking broken */
+.snipcart-item-quantity__button--disabled,
+.snipcart-item-quantity__button[disabled] {
+  opacity: 0.4 !important;
+  pointer-events: none !important;
 }
 
 /* Remove button */
 .snipcart-item-line__remove {
   color: var(--color-ash) !important;
+  transition: color 0.2s ease !important;
 }
 
 .snipcart-item-line__remove:hover {
@@ -3080,8 +3139,13 @@ a.collection-card {
   color: var(--color-silver) !important;
 }
 
-/* ---------- Responsive Tweaks ---------- */
+/* ---------- Snipcart Responsive Tweaks ---------- */
 @media (max-width: 768px) {
+  .snipcart-layout__content {
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
   .snipcart-cart-header__title {
     font-size: 1.1rem !important;
   }
@@ -3090,5 +3154,164 @@ a.collection-card {
   .snipcart-base-button--highlight {
     padding: 12px 20px !important;
     font-size: 0.65rem !important;
+  }
+}
+
+
+/* ============================================
+   COMPLETE THE LOOK — Cross-sell Section
+   ============================================ */
+
+.complete-look {
+  padding: 80px 0 60px;
+  border-top: 1px solid var(--color-ivory);
+}
+
+.complete-look__header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.complete-look__title {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 2rem;
+  letter-spacing: 0.08em;
+  color: var(--color-noir);
+  margin: 10px 0 20px;
+}
+
+.complete-look__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Individual Product Card */
+.complete-look__card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.complete-look__card:hover {
+  transform: translateY(-4px);
+}
+
+.complete-look__card-image-wrap {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background-color: var(--color-ivory);
+}
+
+.complete-look__card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.complete-look__card:hover .complete-look__card-image {
+  transform: scale(1.05);
+}
+
+.complete-look__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 10, 0.25) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.complete-look__card:hover .complete-look__card-overlay {
+  opacity: 0.7;
+}
+
+.complete-look__card-info {
+  padding: 18px 4px 10px;
+  text-align: center;
+}
+
+.complete-look__card-category {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-ash);
+  margin-bottom: 6px;
+}
+
+.complete-look__card-name {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 1.2rem;
+  letter-spacing: 0.04em;
+  color: var(--color-noir);
+  margin-bottom: 8px;
+}
+
+.complete-look__card-price {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--color-noir);
+  letter-spacing: 0.04em;
+  margin-bottom: 14px;
+}
+
+.complete-look__card-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-noir);
+  position: relative;
+}
+
+.complete-look__card-cta-line {
+  display: inline-block;
+  width: 24px;
+  height: 1px;
+  background-color: var(--color-noir);
+  transition: width 0.3s ease;
+}
+
+.complete-look__card:hover .complete-look__card-cta-line {
+  width: 36px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .complete-look {
+    padding: 50px 0 40px;
+  }
+
+  .complete-look__title {
+    font-size: 1.5rem;
+  }
+
+  .complete-look__grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    max-width: 360px;
+  }
+
+  .complete-look__card-name {
+    font-size: 1.05rem;
   }
 }

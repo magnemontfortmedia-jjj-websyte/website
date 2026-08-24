@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://cdn.snipcart.com">
   <link rel="stylesheet" href="https://cdn.snipcart.com/themes/v3.7.1/default/snipcart.css" />
 
-  <link rel="stylesheet" href="styles.css?v=6">
+  <link rel="stylesheet" href="styles.css?v=7">
 </head>
 
 <body>
@@ -150,6 +150,19 @@
 
       </div>
     </div>
+
+    <!-- Complete the Look -->
+    <section class="complete-look" id="completeLook" style="display:none;">
+      <div class="container">
+        <div class="complete-look__header">
+          <p class="section__label">Curated For You</p>
+          <h2 class="complete-look__title">Complete the Look</h2>
+          <div class="divider-line divider-line--center"></div>
+        </div>
+        <div class="complete-look__grid" id="completeLookGrid"></div>
+      </div>
+    </section>
+
   </main>
 
   <!-- Footer -->
@@ -181,8 +194,14 @@
     </div>
   </footer>
 
-  <!-- Hidden Snipcart product definition for crawler validation -->
-  <div hidden id="snipcartCrawlerProducts"></div>
+  <!-- Snipcart Container (side drawer mode) -->
+  <div id="snipcart"
+       data-api-key="NTZlMTFhODAtODhhYy00NTY3LWI5ZTAtNzg4YWZiMDE0OTE0NjM5MjI2NTI1NDM2Mzg1Njgy"
+       data-config-modal-style="side"
+       data-config-add-product-behavior="none"
+       data-currency="aud"
+       hidden>
+  </div>
 
   <!-- Snipcart Initialization -->
   <script>
@@ -197,7 +216,7 @@
   </script>
 
   <!-- Cart System (Snipcart wrapper) -->
-  <script src="cart.js?v=6"></script>
+  <script src="cart.js?v=7"></script>
 
   <!-- Product Page Logic -->
   <script>
@@ -228,49 +247,6 @@
       const detailsList = document.getElementById('detailsList');
       if (product.details) {
         detailsList.innerHTML = product.details.map(d => `<li>${d}</li>`).join('');
-      }
-
-      // ---------- Generate hidden Snipcart product buttons for crawler ----------
-      const crawlerContainer = document.getElementById('snipcartCrawlerProducts');
-      if (crawlerContainer) {
-        const sizes = product.sizes || ['XS', 'S', 'M', 'L', 'XL'];
-        const colors = product.colors || [null];
-
-        colors.forEach(color => {
-          sizes.forEach(size => {
-            const uniqueId = color
-              ? `${productId}-${size}-${color.id}`
-              : `${productId}-${size}`;
-            const colorLabel = color ? ` — ${color.name}` : '';
-            const image = color ? color.image : product.images[0];
-
-            let btn = document.createElement('button');
-            btn.className = 'snipcart-add-item';
-            btn.setAttribute('data-item-id', uniqueId);
-            btn.setAttribute('data-item-name', product.name);
-            btn.setAttribute('data-item-price', product.price.toFixed(2));
-            btn.setAttribute('data-item-url', window.location.href.split('#')[0]);
-            
-            const fullImagePath = image.startsWith('http') 
-              ? image 
-              : `${window.location.origin}${window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/'))}/${image}`;
-            btn.setAttribute('data-item-image', fullImagePath);
-            
-            btn.setAttribute('data-item-description', `Size: ${size}${colorLabel}`);
-            btn.setAttribute('data-item-custom1-name', 'Size');
-            btn.setAttribute('data-item-custom1-options', sizes.join('|'));
-            btn.setAttribute('data-item-custom1-value', size);
-
-            if (color) {
-              const colorOptions = product.colors.map(c => c.name).join('|');
-              btn.setAttribute('data-item-custom2-name', 'Colour');
-              btn.setAttribute('data-item-custom2-options', colorOptions);
-              btn.setAttribute('data-item-custom2-value', color.name);
-            }
-
-            crawlerContainer.appendChild(btn);
-          });
-        });
       }
 
       // ---------- Size Selector ----------
@@ -368,6 +344,36 @@
           }
         });
       });
+
+      // ---------- Complete the Look ----------
+      const complementary = MagneCart.getComplementary(productId);
+      if (complementary.length > 0) {
+        const section = document.getElementById('completeLook');
+        const grid = document.getElementById('completeLookGrid');
+
+        grid.innerHTML = complementary.map(item => {
+          const img = item.images[0];
+          return `
+            <a href="product.html?id=${item.id}" class="complete-look__card" id="complete-look-${item.id}">
+              <div class="complete-look__card-image-wrap">
+                <img src="${img}" alt="${item.name}" class="complete-look__card-image">
+                <div class="complete-look__card-overlay"></div>
+              </div>
+              <div class="complete-look__card-info">
+                <p class="complete-look__card-category">${item.category}</p>
+                <h3 class="complete-look__card-name">${item.name}</h3>
+                <p class="complete-look__card-price">$${item.price}</p>
+                <span class="complete-look__card-cta">
+                  View Product
+                  <span class="complete-look__card-cta-line"></span>
+                </span>
+              </div>
+            </a>
+          `;
+        }).join('');
+
+        section.style.display = 'block';
+      }
 
     });
   </script>

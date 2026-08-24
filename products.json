@@ -1,0 +1,102 @@
+[
+  {
+    "id": "bomber-XS",
+    "price": 500.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "bomber-S",
+    "price": 500.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "bomber-M",
+    "price": 500.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "bomber-L",
+    "price": 500.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "bomber-XL",
+    "price": 500.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "cable_knit-XS",
+    "price": 300.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "cable_knit-S",
+    "price": 300.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "cable_knit-M",
+    "price": 300.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "cable_knit-L",
+    "price": 300.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "cable_knit-XL",
+    "price": 300.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "trousers-XS-navy",
+    "price": 200.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "trousers-S-navy",
+    "price": 200.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "trousers-M-navy",
+    "price": 200.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "trousers-L-navy",
+    "price": 200.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "trousers-XL-navy",
+    "price": 200.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "trousers-XS-brown",
+    "price": 200.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "trousers-S-brown",
+    "price": 200.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "trousers-M-brown",
+    "price": 200.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "trousers-L-brown",
+    "price": 200.00,
+    "url": "/products.json"
+  },
+  {
+    "id": "trousers-XL-brown",
+    "price": 200.00,
+    "url": "/products.json"
+  }
+]
