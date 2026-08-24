@@ -3172,26 +3172,30 @@ a.collection-card {
   text-align: left !important;
 }
 
-/* Minimal Delete / Trash Icon */
+/* Minimal Delete / Trash Icon Circle */
 .snipcart-item-line__actions {
   position: static !important;
-  margin: 0 0 0 16px !important;
-  color: var(--color-ash) !important;
-  background: transparent !important;
+  margin: 0 !important;
+  color: #d9383a !important;
+  background-color: #fdf0ef !important;
   border: none !important;
   cursor: pointer !important;
-  padding: 4px !important;
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  transition: color 0.2s ease, transform 0.2s ease !important;
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  border-radius: 50% !important;
+  transition: all 0.2s ease !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
+  padding: 0 !important;
+  flex-shrink: 0 !important;
 }
 
 .snipcart-item-line__actions:hover {
-  color: #d9383a !important;
-  transform: scale(1.15) !important;
+  background-color: #fbe2e0 !important;
+  color: #b71c1c !important;
+  transform: scale(1.08) !important;
 }
 
 .snipcart-item-line__actions .snipcart-button-icon {
@@ -3305,7 +3309,7 @@ a.collection-card {
   color: var(--color-noir) !important;
 }
 
-/* Item Price on the right */
+/* Item Price on the right: last digit centered with the 36px bin icon above */
 .snipcart-item-quantity__total-price,
 .snipcart-item-line__price {
   font-family: var(--font-body) !important;
@@ -3315,6 +3319,8 @@ a.collection-card {
   color: var(--color-noir) !important;
   text-align: right !important;
   margin-left: auto !important;
+  padding-right: 12px !important; /* Centers last digit with 36px bin */
+  margin-right: 0 !important;
   border: none !important;
   box-shadow: none !important;
 }
@@ -3385,6 +3391,7 @@ a.collection-card {
   flex: 1 1 auto !important;
 }
 
+/* Subtotal, Shipping, Taxes, and Total prices in line with the product price last digit */
 .snipcart-summary-fees__amount,
 .snipcart-cart-summary-fees__amount {
   text-align: right !important;
@@ -3394,6 +3401,7 @@ a.collection-card {
   color: var(--color-noir) !important;
   font-weight: 500 !important;
   margin: 0 !important;
+  padding-right: 12px !important; /* Exactly in line with product price last digit */
   flex-shrink: 0 !important;
 }
 
@@ -3429,9 +3437,10 @@ a.collection-card {
   font-weight: 600 !important;
   font-size: 1.25rem !important;
   letter-spacing: 0.04em !important;
+  padding-right: 12px !important;
 }
 
-/* Full-width Primary Checkout CTA Button in Upper Box */
+/* Checkout CTA Button: from start of Total on left to right edge of bin circle */
 .snipcart-button-primary,
 .snipcart-base-button--highlight,
 .snipcart-cart-button--checkout {
@@ -3470,7 +3479,7 @@ a.collection-card {
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* ---------- Lower Box: Powered by Snipcart + Payment Logos ---------- */
+/* ---------- Lower Box: Powered by Snipcart + Payment Logos (Centered under button) ---------- */
 .snipcart-cart__featured-payment-methods-container,
 .snipcart-featured-payment-methods {
   display: flex !important;
@@ -3493,12 +3502,14 @@ a.collection-card {
   color: var(--color-ash) !important;
   background: transparent !important;
   padding: 0 !important;
-  margin: 0 0 10px 0 !important;
+  margin: 0 auto 10px auto !important;
   position: static !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
   gap: 8px !important;
+  text-align: center !important;
+  width: 100% !important;
 }
 
 .snipcart-cart__featured-payment-methods-list {
@@ -3507,6 +3518,7 @@ a.collection-card {
   align-items: center !important;
   gap: 16px !important;
   margin: 0 auto !important;
+  width: 100% !important;
 }
 
 /* Secondary Action / Continue Shopping */
