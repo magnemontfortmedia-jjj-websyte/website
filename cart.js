@@ -240,6 +240,23 @@ const MagneCart = (() => {
       });
     }
 
+    // Intercept header back arrow when in checkout to return to Cart Summary
+    document.addEventListener('click', (e) => {
+      const backBtn = e.target.closest('.snipcart-cart-header__close-button, .snipcart-modal__close, .snipcart-cart-header button');
+      if (!backBtn) return;
+
+      // Check if we are currently on a checkout step (not on the main cart summary)
+      const isCheckout = document.querySelector('.snipcart-checkout, .snipcart-checkout-step, .snipcart-payment-card-form, .snipcart-form');
+      if (isCheckout) {
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation();
+        if (window.Snipcart && window.Snipcart.api && window.Snipcart.api.theme) {
+          window.Snipcart.api.theme.cart.open();
+        }
+      }
+    }, true); // Capture phase ensures we intercept before Snipcart's default close action
+
     // Listen for Snipcart ready event to sync badge
     document.addEventListener('snipcart.ready', () => {
       updateBadge();
