@@ -2945,27 +2945,13 @@ a.collection-card {
   overflow-x: hidden !important;
   -webkit-overflow-scrolling: touch !important;
   box-sizing: border-box !important;
-  animation: snipcart-backdrop-fade 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-}
-
-@keyframes snipcart-backdrop-fade {
-  from {
-    opacity: 0;
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
-  }
-  to {
-    opacity: 1;
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-  }
 }
 
 .snipcart-modal__overlay {
   display: none !important;
 }
 
-/* ---------- Spacious Central Modal Card (Pure Fade Transition) ---------- */
+/* ---------- Spacious Central Modal Card ---------- */
 .snipcart-layout,
 .snipcart-modal {
   width: 100% !important;
@@ -2983,43 +2969,48 @@ a.collection-card {
   overflow: visible !important;
   border-radius: 0 !important;
   box-sizing: border-box !important;
-  animation: snipcart-card-fade-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  opacity: 1 !important;
+  transform: none !important;
 }
 
-/* Disable swipe from the right; use pure opacity fade */
+/* Pure Opacity Fade Transitions (Zero Flicker / No Sliding) */
 .snipcart-transition--slide-in-enter-active,
 .snipcart-transition--popup-enter-active,
+.snipcart-billing-completed__slide-transition--enter-active,
+.snipcart-cart-summary__overlay-transition-enter-active,
 .snipcart-transition--slide-in-enter-active[data-v-00c4f9d2],
 .snipcart-transition--popup-enter-active[data-v-00c4f9d2] {
-  animation: snipcart-card-fade-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  animation: snipcart-fade-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) both !important;
   transform: none !important;
 }
 
 .snipcart-transition--slide-in-leave-active,
 .snipcart-transition--popup-leave-active,
+.snipcart-billing-completed__slide-transition--enter-leave,
+.snipcart-cart-summary__overlay-transition-leave-active,
 .snipcart-transition--slide-in-leave-active[data-v-00c4f9d2],
 .snipcart-transition--popup-leave-active[data-v-00c4f9d2] {
-  animation: snipcart-card-fade-out 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  animation: snipcart-fade-out 0.2s cubic-bezier(0.16, 1, 0.3, 1) both !important;
   transform: none !important;
 }
 
-@keyframes snipcart-card-fade-in {
-  from {
+@keyframes snipcart-fade-in {
+  0% {
     opacity: 0;
     transform: scale(0.985);
   }
-  to {
+  100% {
     opacity: 1;
     transform: scale(1);
   }
 }
 
-@keyframes snipcart-card-fade-out {
-  from {
+@keyframes snipcart-fade-out {
+  0% {
     opacity: 1;
     transform: scale(1);
   }
-  to {
+  100% {
     opacity: 0;
     transform: scale(0.985);
   }
