@@ -3044,7 +3044,7 @@ a.collection-card {
   flex: 1 1 auto !important;
 }
 
-/* Force 100% full-width single-column layout (no 2-column split) */
+/* Force 100% full-width single-column layout across all viewports */
 .snipcart-layout__cols,
 .snipcart-layout__cols--large,
 .snipcart-layout-sidebar__container,
@@ -3053,6 +3053,7 @@ a.collection-card {
   flex-direction: column !important;
   width: 100% !important;
   max-width: 100% !important;
+  min-width: 100% !important;
   margin: 0 auto !important;
   padding: 0 !important;
   grid-template-columns: 1fr !important;
@@ -3069,10 +3070,12 @@ a.collection-card {
 .snipcart-checkout-step__col--large {
   width: 100% !important;
   max-width: 100% !important;
-  flex: none !important;
+  min-width: 100% !important;
+  flex: 1 1 100% !important;
   margin: 0 !important;
   padding: 0 !important;
   float: none !important;
+  display: block !important;
 }
 
 /* ---------- Spacious Product Rows ---------- */
@@ -3081,6 +3084,7 @@ a.collection-card {
   margin: 0 !important;
   list-style: none !important;
   width: 100% !important;
+  max-width: 100% !important;
   box-sizing: border-box !important;
   flex: 1 1 auto !important;
 }
@@ -3092,6 +3096,7 @@ a.collection-card {
   background-color: transparent !important;
   box-shadow: none !important;
   width: 100% !important;
+  max-width: 100% !important;
   box-sizing: border-box !important;
 }
 
@@ -3104,9 +3109,11 @@ a.collection-card {
   flex-direction: row !important;
   align-items: center !important;
   width: 100% !important;
+  max-width: 100% !important;
   gap: 24px !important;
   margin: 0 !important;
   padding: 0 !important;
+  box-sizing: border-box !important;
 }
 
 /* Product thumbnail */
@@ -3142,11 +3149,13 @@ a.collection-card {
   flex-direction: column !important;
   justify-content: space-between !important;
   min-width: 0 !important;
-  width: auto !important;
+  width: 100% !important;
+  max-width: 100% !important;
   padding: 0 !important;
   margin: 0 !important;
   border: none !important;
   box-shadow: none !important;
+  box-sizing: border-box !important;
 }
 
 /* Title & Delete Header Row */
@@ -3155,8 +3164,10 @@ a.collection-card {
   align-items: flex-start !important;
   justify-content: space-between !important;
   width: 100% !important;
+  max-width: 100% !important;
   margin: 0 0 4px 0 !important;
   padding: 0 !important;
+  box-sizing: border-box !important;
 }
 
 .snipcart-item-line__title,
@@ -3218,31 +3229,30 @@ a.collection-card {
   padding: 0 !important;
   text-align: left !important;
   display: block !important;
+  width: 100% !important;
   border: none !important;
 }
 
-/* Quantity & Price Row: Clean, no strange borders */
-.snipcart-item-quantity__quantity-price-container,
+/* Quantity & Price Row: Full Width Container */
+.snipcart-item-quantity,
 .snipcart-item-line__quantity,
-.snipcart-item-line .snipcart-form__field--plan__readonly,
-.snipcart-item-line__variants,
-.snipcart-item-line__product,
-.snipcart-item-line__body {
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-  background: transparent !important;
-}
-
 .snipcart-item-quantity__quantity-price-container,
-.snipcart-item-line__quantity {
+.snipcart-item-line .snipcart-form__field--plan__readonly {
   display: flex !important;
   flex-direction: row !important;
   justify-content: space-between !important;
   align-items: center !important;
   width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  margin: 0 !important;
   margin-top: auto !important;
   padding: 0 !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  box-sizing: border-box !important;
 }
 
 /* Hide redundant "Quantity" label */
@@ -3250,9 +3260,8 @@ a.collection-card {
   display: none !important;
 }
 
-/* Stepper Box */
-.snipcart-item-quantity__quantity,
-.snipcart-item-quantity {
+/* Stepper Box (Left) */
+.snipcart-item-quantity__quantity {
   display: inline-flex !important;
   flex-direction: row !important;
   align-items: center !important;
@@ -3260,12 +3269,13 @@ a.collection-card {
   border: 1px solid var(--color-pearl) !important;
   background-color: var(--color-white) !important;
   height: 36px !important;
-  width: auto !important;
+  width: 110px !important;
   min-width: 110px !important;
-  max-width: 120px !important;
+  max-width: 110px !important;
   margin: 0 !important;
   padding: 0 !important;
   border-radius: 0 !important;
+  flex-shrink: 0 !important;
 }
 
 .snipcart-item-quantity__button {
@@ -3299,8 +3309,7 @@ a.collection-card {
   pointer-events: none !important;
 }
 
-.snipcart-item-quantity__quantity span,
-.snipcart-item-quantity span {
+.snipcart-item-quantity__quantity span {
   min-width: 32px !important;
   text-align: center !important;
   font-family: var(--font-body) !important;
@@ -3323,6 +3332,8 @@ a.collection-card {
   margin-right: 0 !important;
   border: none !important;
   box-shadow: none !important;
+  flex-shrink: 0 !important;
+  display: block !important;
 }
 
 /* ========================================================
@@ -3336,6 +3347,7 @@ a.collection-card {
   display: block !important;
   width: 100% !important;
   max-width: 100% !important;
+  min-width: 100% !important;
   border-top: 1px solid var(--color-ivory) !important;
   padding: 32px 36px 36px 36px !important;
   background-color: var(--color-white) !important;
@@ -3348,9 +3360,11 @@ a.collection-card {
 .snipcart-cart-summary__actions {
   width: 100% !important;
   max-width: 100% !important;
+  min-width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
   display: block !important;
+  box-sizing: border-box !important;
 }
 
 /* ---------- Upper Box: Fee List (Vertical Stack of Rows) ---------- */
@@ -3360,10 +3374,12 @@ a.collection-card {
   flex-direction: column !important; /* Stack rows vertically */
   width: 100% !important;
   max-width: 100% !important;
+  min-width: 100% !important;
   margin: 0 0 20px 0 !important;
   padding: 0 !important;
   list-style: none !important;
   gap: 8px !important;
+  box-sizing: border-box !important;
 }
 
 /* Individual Row (Subtotal, Shipping, Taxes, Total) */
@@ -3374,6 +3390,8 @@ a.collection-card {
   justify-content: space-between !important;
   align-items: center !important;
   width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
   padding: 4px 0 !important;
   margin: 0 !important;
   box-sizing: border-box !important;
@@ -3418,11 +3436,14 @@ a.collection-card {
   justify-content: space-between !important;
   align-items: center !important;
   width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .snipcart-summary-fees__item:last-child .snipcart-summary-fees__title,
 .snipcart-summary-fees--highlight .snipcart-summary-fees__title,
-.snipcart-cart-summary-fees--highlight .snipcart-cart-summary-fees__title {
+.snipcart-cart-summary-fees--highlight .snipcart-summary-fees__title {
   color: var(--color-noir) !important;
   font-weight: 600 !important;
   font-size: 1.15rem !important;
@@ -3432,7 +3453,7 @@ a.collection-card {
 
 .snipcart-summary-fees__item:last-child .snipcart-summary-fees__amount,
 .snipcart-summary-fees--highlight .snipcart-summary-fees__amount,
-.snipcart-cart-summary-fees--highlight .snipcart-cart-summary-fees__amount {
+.snipcart-cart-summary-fees--highlight .snipcart-summary-fees__amount {
   color: var(--color-noir) !important;
   font-weight: 600 !important;
   font-size: 1.25rem !important;
@@ -3456,6 +3477,7 @@ a.collection-card {
   padding: 20px 32px !important;
   width: 100% !important;
   max-width: 100% !important;
+  min-width: 100% !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -3487,10 +3509,13 @@ a.collection-card {
   align-items: center !important;
   justify-content: center !important;
   width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
   margin: 0 auto !important;
   padding-top: 18px !important;
   border-top: 1px solid var(--color-ivory) !important;
   text-align: center !important;
+  box-sizing: border-box !important;
 }
 
 .snipcart-cart__featured-payment-methods-title,
