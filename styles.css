@@ -2865,7 +2865,7 @@ a.collection-card {
 /* ============================================
    SNIPCART THEME OVERRIDES
    Match Magne Montfort luxury aesthetic
-   Side drawer (right column) layout
+   Full-page cart takeover
    ============================================ */
 
 /* ---------- Global Snipcart Overrides ---------- */
@@ -2875,85 +2875,87 @@ a.collection-card {
   font-family: var(--font-body) !important;
 }
 
-/* Snipcart overlay backdrop — semi-transparent, lets site show through */
+/* Full-page backdrop — completely covers the site */
 .snipcart-modal__container {
-  background-color: rgba(10, 10, 10, 0.35) !important;
-  backdrop-filter: blur(2px) !important;
+  background-color: var(--color-noir) !important;
+  backdrop-filter: none !important;
 }
 
-/* ---------- Side Drawer Layout ---------- */
-/* Force the cart to be a right-side column */
+/* ---------- Full-Page Layout ---------- */
 .snipcart-layout {
   display: flex !important;
-  justify-content: flex-end !important;
-}
-
-.snipcart-layout__content {
-  max-width: 460px !important;
-  width: 100% !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
   min-height: 100vh !important;
-  height: 100% !important;
-  margin-left: auto !important;
-  margin-right: 0 !important;
-  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.4) !important;
-  animation: snipcart-slide-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-  overflow-y: auto !important;
   background-color: var(--color-noir) !important;
 }
 
-@keyframes snipcart-slide-in {
-  from {
-    transform: translateX(100%);
-    opacity: 0.8;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+.snipcart-layout__content {
+  max-width: 680px !important;
+  width: 100% !important;
+  min-height: 100vh !important;
+  margin: 0 auto !important;
+  padding: 0 30px !important;
+  background-color: var(--color-noir) !important;
+  box-shadow: none !important;
+  animation: snipcart-fade-in 0.3s ease !important;
 }
 
-/* Cart sidebar panel — dark theme */
+@keyframes snipcart-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ---------- Cart Header (Back / Close) ---------- */
 .snipcart-cart-header,
 .snipcart-cart__content {
   background-color: var(--color-noir) !important;
   color: var(--color-pearl) !important;
 }
 
+.snipcart-cart-header {
+  padding: 30px 0 20px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
 .snipcart-cart-header__title {
   font-family: var(--font-display) !important;
   font-weight: 300 !important;
-  font-size: 1.4rem !important;
+  font-size: 1.6rem !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
   color: var(--color-white) !important;
 }
 
+/* Close / back button — large and clear */
 .snipcart-cart-header__close-button {
   color: var(--color-pearl) !important;
-  transition: opacity 0.2s ease !important;
+  transition: color 0.2s ease !important;
+  font-size: 1.2rem !important;
 }
 
 .snipcart-cart-header__close-button:hover {
-  opacity: 0.6 !important;
+  color: var(--color-white) !important;
 }
 
 /* ---------- Cart Items ---------- */
 .snipcart-item-line {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding: 24px 0 !important;
   transition: opacity 0.15s ease !important;
 }
 
 .snipcart-item-line__title {
   font-family: var(--font-display) !important;
   font-weight: 400 !important;
-  font-size: 1rem !important;
+  font-size: 1.05rem !important;
   letter-spacing: 0.05em !important;
   color: var(--color-white) !important;
 }
 
 .snipcart-item-line__variant {
   font-family: var(--font-body) !important;
-  font-size: 0.75rem !important;
+  font-size: 0.78rem !important;
   color: var(--color-silver) !important;
   letter-spacing: 0.04em !important;
 }
@@ -2962,11 +2964,17 @@ a.collection-card {
   font-family: var(--font-body) !important;
   color: var(--color-white) !important;
   font-weight: 400 !important;
-  font-size: 0.9rem !important;
+  font-size: 0.95rem !important;
   letter-spacing: 0.04em !important;
 }
 
-/* ---------- Quantity Buttons (Snappy feedback) ---------- */
+/* Product image in cart */
+.snipcart-item-line__media {
+  border-radius: 0 !important;
+  background-color: rgba(255, 255, 255, 0.04) !important;
+}
+
+/* ---------- Quantity Buttons ---------- */
 .snipcart-item-quantity__quantity {
   font-family: var(--font-body) !important;
   color: var(--color-white) !important;
@@ -2984,7 +2992,6 @@ a.collection-card {
   -webkit-tap-highlight-color: transparent !important;
 }
 
-/* Immediate visual feedback on press */
 .snipcart-item-quantity__button:hover {
   background-color: rgba(255, 255, 255, 0.08) !important;
   border-color: rgba(255, 255, 255, 0.35) !important;
@@ -2996,7 +3003,6 @@ a.collection-card {
   border-color: rgba(255, 255, 255, 0.5) !important;
 }
 
-/* Prevent the loading/disabled state from looking broken */
 .snipcart-item-quantity__button--disabled,
 .snipcart-item-quantity__button[disabled] {
   opacity: 0.4 !important;
@@ -3015,8 +3021,8 @@ a.collection-card {
 
 /* ---------- Cart Summary / Footer ---------- */
 .snipcart-cart-summary {
-  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-  padding: 20px 24px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding: 24px 0 !important;
   width: 100% !important;
 }
 
@@ -3027,17 +3033,17 @@ a.collection-card {
 .snipcart-cart-summary-fees__title,
 .snipcart-cart-summary-fees__amount {
   font-family: var(--font-body) !important;
-  font-size: 0.85rem !important;
+  font-size: 0.88rem !important;
   letter-spacing: 0.06em !important;
   color: var(--color-pearl) !important;
 }
 
-/* Total row — bolder */
+/* Total row */
 .snipcart-cart-summary-fees--highlight .snipcart-cart-summary-fees__title,
 .snipcart-cart-summary-fees--highlight .snipcart-cart-summary-fees__amount {
   color: var(--color-white) !important;
   font-weight: 500 !important;
-  font-size: 0.95rem !important;
+  font-size: 1rem !important;
 }
 
 /* ---------- Primary Buttons (Checkout, Continue, etc.) ---------- */
@@ -3052,7 +3058,7 @@ a.collection-card {
   text-transform: uppercase !important;
   border-radius: 0 !important;
   border: none !important;
-  padding: 16px 30px !important;
+  padding: 18px 30px !important;
   width: 100% !important;
   display: block !important;
   text-align: center !important;
@@ -3128,6 +3134,7 @@ a.collection-card {
   font-weight: 300 !important;
   letter-spacing: 0.1em !important;
   text-transform: uppercase !important;
+  color: var(--color-white) !important;
 }
 
 .snipcart-order__box {
@@ -3164,17 +3171,16 @@ a.collection-card {
 /* ---------- Snipcart Responsive Tweaks ---------- */
 @media (max-width: 768px) {
   .snipcart-layout__content {
-    max-width: 100% !important;
-    width: 100% !important;
+    padding: 0 20px !important;
   }
 
   .snipcart-cart-header__title {
-    font-size: 1.1rem !important;
+    font-size: 1.2rem !important;
   }
 
   .snipcart-button-primary,
   .snipcart-base-button--highlight {
-    padding: 12px 20px !important;
+    padding: 16px 20px !important;
     font-size: 0.65rem !important;
   }
 }
