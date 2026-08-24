@@ -1,7 +1,7 @@
 /* ============================================
    MAGNE MONTFORT — Design System
    Luxury Fashion House | Est. MMXXVI
-   White Primary / Cartier-Inspired
+   1 Primary / Cartier-Inspired
    ============================================ */
 
 /* ---------- CSS Custom Properties ---------- */
@@ -2606,11 +2606,27 @@ a.collection-card {
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20% { transform: translateX(-4px); }
-  40% { transform: translateX(4px); }
-  60% { transform: translateX(-3px); }
-  80% { transform: translateX(3px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20% {
+    transform: translateX(-4px);
+  }
+
+  40% {
+    transform: translateX(4px);
+  }
+
+  60% {
+    transform: translateX(-3px);
+  }
+
+  80% {
+    transform: translateX(3px);
+  }
 }
 
 .size-btn {
@@ -2891,19 +2907,93 @@ a.collection-card {
 }
 
 .snipcart-layout__content {
-  max-width: 680px !important;
+  max-width: 600px !important;
   width: 100% !important;
   min-height: 100vh !important;
   margin: 0 auto !important;
-  padding: 100px 30px 0 !important;
+  padding: 120px 30px 40px !important;
   background-color: var(--color-white) !important;
   box-shadow: none !important;
   animation: snipcart-fade-in 0.3s ease !important;
 }
 
+/* Force ALL Snipcart columns to stack vertically and center */
+.snipcart-layout__cols {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  max-width: 100% !important;
+}
+
+.snipcart-layout__col {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.snipcart-layout__col--large {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: none !important;
+}
+
+.snipcart-layout__col--small {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: none !important;
+}
+
+/* Center cart item list */
+.snipcart-cart__content {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.snipcart-cart__content > * {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Center the summary & checkout button */
+.snipcart-cart-summary,
+.snipcart-cart-button--checkout {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* Center checkout steps */
+.snipcart-checkout__content {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+.snipcart-checkout-step {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Center the "Place Order" button area */
+.snipcart-payment-card-form {
+  max-width: 100% !important;
+}
+
+/* Keep order summary centered when in checkout */
+.snipcart-order-summary {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
 @keyframes snipcart-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 /* ---------- Cart Header (Back / Close) ---------- */
@@ -3250,11 +3340,9 @@ a.collection-card {
 .complete-look__card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(10, 10, 10, 0.25) 0%,
-    transparent 50%
-  );
+  background: linear-gradient(to top,
+      rgba(10, 10, 10, 0.25) 0%,
+      transparent 50%);
   pointer-events: none;
   transition: opacity 0.4s ease;
 }
