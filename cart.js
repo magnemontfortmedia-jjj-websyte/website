@@ -152,6 +152,8 @@ const MagneCart = (() => {
         image: fullImage,
         quantity: qty,
         customFields: customFields
+      }).then(() => {
+        openDrawer();
       }).catch(err => {
         console.error('Snipcart add to cart error:', err);
       });
