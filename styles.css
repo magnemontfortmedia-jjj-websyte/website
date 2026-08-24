@@ -2895,9 +2895,10 @@ a.collection-card {
   height: 100% !important;
   margin-left: auto !important;
   margin-right: 0 !important;
-  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.4) !important;
   animation: snipcart-slide-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
   overflow-y: auto !important;
+  background-color: var(--color-noir) !important;
 }
 
 @keyframes snipcart-slide-in {
@@ -2911,10 +2912,11 @@ a.collection-card {
   }
 }
 
-/* Cart sidebar panel */
+/* Cart sidebar panel — dark theme */
 .snipcart-cart-header,
 .snipcart-cart__content {
-  background-color: var(--color-white) !important;
+  background-color: var(--color-noir) !important;
+  color: var(--color-pearl) !important;
 }
 
 .snipcart-cart-header__title {
@@ -2923,11 +2925,11 @@ a.collection-card {
   font-size: 1.4rem !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;
-  color: var(--color-noir) !important;
+  color: var(--color-white) !important;
 }
 
 .snipcart-cart-header__close-button {
-  color: var(--color-noir) !important;
+  color: var(--color-pearl) !important;
   transition: opacity 0.2s ease !important;
 }
 
@@ -2937,7 +2939,7 @@ a.collection-card {
 
 /* ---------- Cart Items ---------- */
 .snipcart-item-line {
-  border-bottom: 1px solid var(--color-ivory) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
   transition: opacity 0.15s ease !important;
 }
 
@@ -2946,32 +2948,35 @@ a.collection-card {
   font-weight: 400 !important;
   font-size: 1rem !important;
   letter-spacing: 0.05em !important;
-  color: var(--color-noir) !important;
+  color: var(--color-white) !important;
 }
 
 .snipcart-item-line__variant {
   font-family: var(--font-body) !important;
   font-size: 0.75rem !important;
-  color: var(--color-ash) !important;
+  color: var(--color-silver) !important;
   letter-spacing: 0.04em !important;
 }
 
 .snipcart-item-line__price {
   font-family: var(--font-body) !important;
-  color: var(--color-noir) !important;
+  color: var(--color-white) !important;
   font-weight: 400 !important;
+  font-size: 0.9rem !important;
+  letter-spacing: 0.04em !important;
 }
 
 /* ---------- Quantity Buttons (Snappy feedback) ---------- */
 .snipcart-item-quantity__quantity {
   font-family: var(--font-body) !important;
-  color: var(--color-noir) !important;
+  color: var(--color-white) !important;
   transition: transform 0.1s ease !important;
 }
 
 .snipcart-item-quantity__button {
-  color: var(--color-noir) !important;
-  border-color: var(--color-pearl) !important;
+  color: var(--color-pearl) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  background-color: transparent !important;
   transition: all 0.1s ease !important;
   cursor: pointer !important;
   user-select: none !important;
@@ -2981,14 +2986,14 @@ a.collection-card {
 
 /* Immediate visual feedback on press */
 .snipcart-item-quantity__button:hover {
-  background-color: var(--color-ivory) !important;
-  border-color: var(--color-ash) !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
 }
 
 .snipcart-item-quantity__button:active {
   transform: scale(0.9) !important;
-  background-color: var(--color-pearl) !important;
-  border-color: var(--color-noir) !important;
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
 }
 
 /* Prevent the loading/disabled state from looking broken */
@@ -3000,17 +3005,19 @@ a.collection-card {
 
 /* Remove button */
 .snipcart-item-line__remove {
-  color: var(--color-ash) !important;
+  color: var(--color-silver) !important;
   transition: color 0.2s ease !important;
 }
 
 .snipcart-item-line__remove:hover {
-  color: var(--color-noir) !important;
+  color: var(--color-white) !important;
 }
 
 /* ---------- Cart Summary / Footer ---------- */
 .snipcart-cart-summary {
-  border-top: 1px solid var(--color-ivory) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  padding: 20px 24px !important;
+  width: 100% !important;
 }
 
 .snipcart-cart-summary__content {
@@ -3020,50 +3027,63 @@ a.collection-card {
 .snipcart-cart-summary-fees__title,
 .snipcart-cart-summary-fees__amount {
   font-family: var(--font-body) !important;
-  font-size: 0.8rem !important;
+  font-size: 0.85rem !important;
   letter-spacing: 0.06em !important;
-  color: var(--color-noir) !important;
+  color: var(--color-pearl) !important;
+}
+
+/* Total row — bolder */
+.snipcart-cart-summary-fees--highlight .snipcart-cart-summary-fees__title,
+.snipcart-cart-summary-fees--highlight .snipcart-cart-summary-fees__amount {
+  color: var(--color-white) !important;
+  font-weight: 500 !important;
+  font-size: 0.95rem !important;
 }
 
 /* ---------- Primary Buttons (Checkout, Continue, etc.) ---------- */
 .snipcart-button-primary,
 .snipcart-base-button--highlight {
-  background-color: var(--color-noir) !important;
-  color: var(--color-white) !important;
+  background-color: var(--color-white) !important;
+  color: var(--color-noir) !important;
   font-family: var(--font-body) !important;
-  font-size: 0.68rem !important;
+  font-size: 0.72rem !important;
   font-weight: 400 !important;
-  letter-spacing: 0.25em !important;
+  letter-spacing: 0.3em !important;
   text-transform: uppercase !important;
   border-radius: 0 !important;
   border: none !important;
-  padding: 14px 30px !important;
-  transition: background-color 0.3s ease !important;
+  padding: 16px 30px !important;
+  width: 100% !important;
+  display: block !important;
+  text-align: center !important;
+  transition: all 0.3s ease !important;
 }
 
 .snipcart-button-primary:hover,
 .snipcart-base-button--highlight:hover {
-  background-color: var(--color-charcoal) !important;
+  background-color: var(--color-pearl) !important;
+  color: var(--color-noir) !important;
 }
 
 /* Secondary buttons */
 .snipcart-button-secondary,
 .snipcart-base-button--secondary {
   background-color: transparent !important;
-  color: var(--color-noir) !important;
+  color: var(--color-pearl) !important;
   font-family: var(--font-body) !important;
   font-size: 0.68rem !important;
   letter-spacing: 0.2em !important;
   text-transform: uppercase !important;
-  border: 1px solid var(--color-pearl) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
   border-radius: 0 !important;
   transition: all 0.3s ease !important;
 }
 
 .snipcart-button-secondary:hover,
 .snipcart-base-button--secondary:hover {
-  border-color: var(--color-noir) !important;
-  background-color: var(--color-ivory) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+  background-color: rgba(255, 255, 255, 0.06) !important;
+  color: var(--color-white) !important;
 }
 
 /* ---------- Checkout Form ---------- */
@@ -3073,7 +3093,7 @@ a.collection-card {
   font-size: 1.3rem !important;
   letter-spacing: 0.1em !important;
   text-transform: uppercase !important;
-  color: var(--color-noir) !important;
+  color: var(--color-white) !important;
 }
 
 .snipcart-form__label {
@@ -3081,22 +3101,23 @@ a.collection-card {
   font-size: 0.72rem !important;
   letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
-  color: var(--color-ash) !important;
+  color: var(--color-silver) !important;
 }
 
 .snipcart-form__input,
 .snipcart-form__select {
   font-family: var(--font-body) !important;
-  border: 1px solid var(--color-pearl) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
   border-radius: 0 !important;
-  color: var(--color-noir) !important;
+  color: var(--color-white) !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
   font-size: 0.85rem !important;
   transition: border-color 0.3s ease !important;
 }
 
 .snipcart-form__input:focus,
 .snipcart-form__select:focus {
-  border-color: var(--color-noir) !important;
+  border-color: var(--color-gold) !important;
   box-shadow: none !important;
   outline: none !important;
 }
@@ -3110,8 +3131,9 @@ a.collection-card {
 }
 
 .snipcart-order__box {
-  border: 1px solid var(--color-ivory) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
   border-radius: 0 !important;
+  background-color: rgba(255, 255, 255, 0.03) !important;
 }
 
 /* ---------- Empty Cart ---------- */
@@ -3121,7 +3143,7 @@ a.collection-card {
   font-size: 1.3rem !important;
   letter-spacing: 0.1em !important;
   text-transform: uppercase !important;
-  color: var(--color-noir) !important;
+  color: var(--color-pearl) !important;
 }
 
 /* ---------- Discount / Promo ---------- */
