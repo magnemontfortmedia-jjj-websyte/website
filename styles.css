@@ -3356,8 +3356,25 @@ a.collection-card {
   margin-top: auto !important;
 }
 
+/* Force both footer columns to span 100% full width and hide empty discount column */
+.snipcart-cart__footer-col {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+  flex: none !important;
+}
+
+.snipcart-cart__footer-discount-box {
+  display: none !important;
+}
+
 .snipcart-cart-summary__content,
-.snipcart-cart-summary__actions {
+.snipcart-cart-summary__actions,
+.snipcart-cart__footer-buttons {
   width: 100% !important;
   max-width: 100% !important;
   min-width: 100% !important;
@@ -3369,7 +3386,8 @@ a.collection-card {
 
 /* ---------- Upper Box: Fee List (Vertical Stack of Rows) ---------- */
 .snipcart-summary-fees,
-.snipcart-cart-summary-fees {
+.snipcart-cart-summary-fees,
+.snipcart-cart-summary-fees--reverse {
   display: flex !important;
   flex-direction: column !important; /* Stack rows vertically */
   width: 100% !important;
@@ -3424,6 +3442,7 @@ a.collection-card {
 }
 
 /* Total Row Highlight */
+.snipcart-summary-fees__total,
 .snipcart-summary-fees__item:last-child,
 .snipcart-summary-fees--highlight,
 .snipcart-cart-summary-fees--highlight {
@@ -3441,6 +3460,7 @@ a.collection-card {
   box-sizing: border-box !important;
 }
 
+.snipcart-summary-fees__total .snipcart-summary-fees__title,
 .snipcart-summary-fees__item:last-child .snipcart-summary-fees__title,
 .snipcart-summary-fees--highlight .snipcart-summary-fees__title,
 .snipcart-cart-summary-fees--highlight .snipcart-summary-fees__title {
@@ -3451,6 +3471,7 @@ a.collection-card {
   text-transform: uppercase !important;
 }
 
+.snipcart-summary-fees__total .snipcart-summary-fees__amount,
 .snipcart-summary-fees__item:last-child .snipcart-summary-fees__amount,
 .snipcart-summary-fees--highlight .snipcart-summary-fees__amount,
 .snipcart-cart-summary-fees--highlight .snipcart-summary-fees__amount {
@@ -3462,9 +3483,20 @@ a.collection-card {
 }
 
 /* Checkout CTA Button: from start of Total on left to right edge of bin circle */
+.snipcart-cart__footer-buttons {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  margin: 0 0 20px 0 !important;
+  padding: 0 !important;
+  display: block !important;
+  box-sizing: border-box !important;
+}
+
 .snipcart-button-primary,
 .snipcart-base-button--highlight,
-.snipcart-cart-button--checkout {
+.snipcart-cart-button--checkout,
+.snipcart-cart__footer-buttons .snipcart-button-primary {
   background-color: var(--color-noir) !important;
   color: var(--color-white) !important;
   font-family: var(--font-body) !important;
@@ -3488,7 +3520,7 @@ a.collection-card {
   box-shadow: none !important;
   text-decoration: none !important;
   box-sizing: border-box !important;
-  margin: 0 0 20px 0 !important;
+  margin: 0 !important;
 }
 
 .snipcart-button-primary:hover,
